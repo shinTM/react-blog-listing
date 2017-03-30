@@ -1,0 +1,23 @@
+.single-project {
+  .slides {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+
+    .carousel {
+      @include transition(all .8s ease);
+    }
+  }
+
+  ul {
+    @include reset-list;
+
+    li {
+      float: left;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

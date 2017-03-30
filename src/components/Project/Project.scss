@@ -1,0 +1,66 @@
+.projects {
+  li {
+    margin: 0 0 40px;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    flex-basis: 33.3333%;
+    width: 33.3333%;
+
+    @media (max-width: 1200px) {
+      flex-basis: 50%;
+      width: 50%;
+    }
+
+    @media (max-width: 767px) {
+      flex-basis: 100%;
+      width: 100%;
+    }
+
+    figure {
+      margin: 0 0 33px;
+      float: left;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .inner-wrapper {
+      margin: 0 15px;
+    }
+
+    &:after {
+      display: table;
+      width: 100%;
+      clear: both;
+      content: '';
+    }
+  }
+
+  &:after {
+    display: table;
+    width: 100%;
+    clear: both;
+    content: '';
+  }
+}
+
+.permalink {
+  background: $blue-lighter;
+  padding: 15px 27px;
+  border: 2px solid $blue-lighter;
+  color: $white;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .8px;
+  margin-top: 20px;
+  display: inline-block;
+  @include transition(all .3s ease);
+
+  &:hover {
+    color: $black;
+    background: transparent;
+  }
+}

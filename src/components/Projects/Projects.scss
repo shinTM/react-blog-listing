@@ -1,0 +1,40 @@
+.projects {
+  @include reset-list;
+  margin: 0 -15px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.sort_box {
+  background: $white;
+  border-radius: 2px;
+  padding: 30px 26px 15px;
+  margin: 0 0 70px;
+  box-sizing: border-box;
+  column-gap: 30px;
+  column-count: 2;
+  @include box-shadow;
+}
+
+input,
+select {
+  width: 100%;
+  font-size: 13px;
+  line-height: normal;
+  border: none;
+  border-bottom: 1px solid $input-border-color;
+  padding: 11px 0;
+  margin: 0 0 30px;
+  color: rgba(33, 33, 33, 0.8);
+  @include transition(all .15s ease);
+
+  &:focus {
+    box-shadow: none;
+    outline: none;
+    border-bottom-color: $blue-lighter;
+  }
+}
+
+input {
+  margin-top: 2px;
+}

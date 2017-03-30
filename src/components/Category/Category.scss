@@ -1,0 +1,80 @@
+#project-catalogue-page {
+  .project-categories {
+    li {
+      margin: 0;
+      padding: 0;
+      border: none;
+      box-sizing: border-box;
+      flex-basis: 33.3333%;
+      width: 33.3333%;
+
+      figure {
+        margin: 0;
+        float: left;
+        position: relative;
+        overflow: hidden;
+
+        &:before {
+          content: '';
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          @include opacity(.5);
+          @include transition(all .3s ease);
+          background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.01) 1%, rgba(0, 0, 0, 0.82) 81%, #000000 99%);
+          background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), color-stop(1%, rgba(255, 255, 255, 0.01)), color-stop(81%, rgba(0, 0, 0, 0.82)), color-stop(99%, #000000));
+          background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.01) 1%, rgba(0, 0, 0, 0.82) 81%, #000000 99%);
+        }
+
+        figcaption {
+          position: absolute;
+          padding: 0 36px;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          transform: translateY(-53px);
+          @include transition(all .45s ease);
+
+          h3 {
+            margin: 0;
+
+            a {
+              color: $white;
+
+              &:hover {
+                color: $blue-lighter;
+              }
+            }
+          }
+        }
+
+        img {
+          max-width: 100%;
+        }
+
+        &:hover {
+          figcaption {
+            bottom: 50%;
+            transform: translateY(50%);
+          }
+
+          &:before {
+            @include opacity(.8);
+          }
+        }
+      }
+
+      @media (max-width: 1200px) {
+        flex-basis: 50%;
+        width: 50%;
+      }
+
+      @media (max-width: 767px) {
+        flex-basis: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
