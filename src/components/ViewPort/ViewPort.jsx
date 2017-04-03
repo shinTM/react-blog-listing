@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import TermList from '../TermList/TermList';
+import TermList from '../TermList/TermList.jsx';
 
 export default class ViewPort extends Component{
 	state = {
-		titleName: 'Our categories',
+		titleName: 'Blog Listing',
 	};
 
 	render() {
