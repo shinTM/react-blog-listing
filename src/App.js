@@ -1,20 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Blog from './components/Blog/Blog';
-import WpData from './data/wpdata';
+import ViewPort from './components/ViewPort/ViewPort';
+import WpData from './data/WpData';
 
-require('./../sass/style.scss');
+//require('./../sass/style.scss');
 
 let wpData = new WpData();
 
-wpData.httpGet( 'http://localhost:8888/cherry5-dev/wp-json/wp/v2/posts' ).then(
+
+ReactDOM.render(
+	<ViewPort/>,
+	document.getElementById('blog-listing-page')
+);
+
+/*wpData.getAllPosts().then(
 	response => {
 		let responseData = JSON.parse( response );
 
+
+	},
+	error => {
 		ReactDOM.render(
-			<Blog data={ responseData }/>,
+			<div>`Rejected: ${error}`</div>,
 			document.getElementById('blog-listing-page')
 		);
-	},
-	error => alert(`Rejected: ${error}`)
+	}
 );
+
+wpData.getAllCategory().then(
+	response => {
+		let responseData = JSON.parse( response );
+		console.log(responseData);
+	},
+	error => {
+		alert(`Rejected: ${error}`);
+	}
+);*/

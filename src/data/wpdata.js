@@ -1,5 +1,18 @@
 export default class WpData {
-	httpGet( url ) {
+
+	static getAllPosts() {
+		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts`;
+
+		return this.httpGetRequest( url );
+	}
+
+	static getAllCategory() {
+		let url = `${ WpData.siteUrl }/wp-json/wp/v2/categories`;
+
+		return this.httpGetRequest( url );
+	}
+
+	static httpGetRequest( url ) {
 
 		return new Promise( function( resolve, reject ) {
 
@@ -22,7 +35,9 @@ export default class WpData {
 			};
 
 			xhr.send();
-		});
+		} );
 
 	}
 }
+
+WpData.siteUrl = 'http://localhost:8888/cherry5-dev';
