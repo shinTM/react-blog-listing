@@ -16,18 +16,19 @@ export default class TermList extends Component {
 				alert(`Rejected: ${error}`);
 			}
 		);
-		//this.categoryList = WpData.getAllCategory();
 	}
 
-	renderTermList() {
+	renderPostList() {
 		if ( null === this.state.categoryList ) {
-			return null;
+			return(
+				<h4>Loading...</h4>
+			)
 		}
 
 		let itemElements = this.state.categoryList.map( ( category, index ) => {
 			return(
 				<li key={category.slug}>
-					{category.name}
+					<button onClick={this.termItemClick}>{category.name}</button>
 				</li>
 			);
 		});
@@ -41,10 +42,14 @@ export default class TermList extends Component {
 		);
 	}
 
+	termItemClick( event ) {
+		console.log(event);
+	}
+
 	render() {
 		return(
 			<div>
-				{ this.renderTermList() }
+				{ this.renderPostList() }
 			</div>
 		);
 	}
