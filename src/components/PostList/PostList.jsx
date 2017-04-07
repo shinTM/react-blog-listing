@@ -30,7 +30,7 @@ export default class PostList extends Component {
 			console.log(post);
 			return(
 				<div key={post.id} className="post">
-					<Post postData={ post }/>
+					<Post postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
 				</div>
 			);
 		});
@@ -40,6 +40,13 @@ export default class PostList extends Component {
 				{ posts }
 			</div>
 		);
+	}
+
+	saveTitleHandler = ( id, event ) => {
+		console.log(id);
+		console.log(event.target.innerText);
+		//console.log(event);
+		WpData.setTitleData( id, event.target.innerText );
 	}
 
 	render() {

@@ -12,8 +12,8 @@ export default class WpData {
 		return this.httpGetRequest( url );
 	}
 
-	static setTitleData( title ) {
-		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts/107?title=${ title }`;
+	static setTitleData( id, title ) {
+		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts/${ id }?title=${ title }`;
 
 		this.httpPostRequest( url );
 	}
