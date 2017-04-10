@@ -1,81 +1,189 @@
 @import "variables";
 @import "mixins";
-@import "../src/components/ViewPort/ViewPort";
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700,500italic,500,400italic,300italic,300,100italic,100);
 
 body{
-  font:14px $font-family-base;
-  letter-spacing:.1px;
-  color:$gray;
-  background:$gray-lighter;
-  margin:0;
+	font:14px $font-family-base;
+	letter-spacing:.1px;
+	color:$gray;
+	background:$gray-lighter;
+	margin:0;
 }
 
 a{
-  text-decoration:none;
-  outline:0;
-  @include transition(all .3s ease);
+	text-decoration:none;
+	outline:0;
+	@include transition(all .3s ease);
 }
 
 a:hover,
 a:focus{
-  text-decoration:none;
-  outline:0;
+	text-decoration:none;
+	outline:0;
 }
 
 h2{
-  margin:0 0 60px;
-  font-size:42px;
-  font-weight:500;
+	margin:0 0 60px;
+	font-size:42px;
+	font-weight:500;
 }
 
 h2, h3, h4, h5 {
-  color: $black;
+	color: $black;
 }
 
 h3{
-  margin:0 0 30px;
-  font-size:22px;
-  font-weight:500;
+	margin:0 0 30px;
+	font-size:22px;
+	font-weight:500;
+	line-height: 1.6em;
 
-  a{
-    color:inherit;
+	a{
+		color:inherit;
 
-    &:hover {
-      color: $blue-lighter;
-    }
-  }
+		&:hover {
+			color: $blue-lighter;
+		}
+	}
 }
 
 h4{
-  margin:0 0 25px;
-  font-size:16px;
-  font-weight:400;
+	margin:0 0 25px;
+	font-size:16px;
+	font-weight:400;
 
-  span {
-    font-weight: 400;
-  }
+	span {
+		font-weight: 400;
+	}
 }
 
 h5{
-  font-size:13px;
-  line-height:1.1;
-  margin:0;
+	font-size:13px;
+	line-height:1.1;
+	margin:0;
 }
 
 .container{
-  padding:30px;
+	padding:30px;
 
-  @media (min-width:1440px){
-    width:1414px;
-  }
+	@media (min-width:1440px){
+		width:1414px;
+	}
 }
 
 figure {
-  margin: 0;
+	margin: 0;
 
-  img {
-    max-width: 100%;
-  }
+	img {
+		max-width: 100%;
+	}
+}
+
+
+#blog-listing-page {
+	padding: 30px 0;
+	position: relative;
+
+	h2 {
+		padding-right: 50px;
+	}
+
+	.project-categories {
+		@include reset-list;
+		display: flex;
+		flex-flow: row wrap;
+	}
+}
+
+.back-btn {
+	font-size: 0;
+	line-height: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 36px 0 0;
+	background: none;
+	box-shadow: none;
+	border: none;
+	color: $blue-lighter;
+	@include transition(all .3s ease);
+
+	&:before {
+		@include material-icon;
+		font-size: 39px;
+		content: "\e5c4";
+		color: inherit;
+	}
+
+	&:hover {
+		color: $black;
+	}
+
+	&cross:before {
+		content: "\e5cd";
+	}
+}
+
+.terms-list {
+	ul {
+		display: flex;
+		@include reset-list;
+			li {
+				margin: 5px;
+			}
+	}
+}
+
+.post-list {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+
+	.post {
+		flex: 0 1 auto;
+		min-width: 25%;
+
+		.inner-wrapper {
+			margin: 5px;
+		}
+	}
+
+	.thumbnail {
+		margin-bottom: 20px;
+	}
+}
+
+.post-pagination {
+	@include reset-list;
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding: 0 0 30px 0;
+
+		li {
+			width: 30px;
+			height: 30px;
+			margin-left: 1px;
+
+			a {
+				width: inherit;
+				height: inherit;
+				color: $white;
+				background-color: $gray;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border:none;
+
+				&:hover {
+					background-color: $blue-lighter;
+				}
+			}
+
+			&.active a {
+				color: $white;
+				background-color: $blue-lighter;
+			}
+		}
 }

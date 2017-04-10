@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import WpData from '../../data/WpData';
+import WpData from '../data/WpData';
 
 export default class Post extends Component {
 
@@ -8,7 +8,7 @@ export default class Post extends Component {
 
 		return(
 			<div className="inner-wrapper">
-				<figure>
+				<figure className="thumbnail">
 					<img alt={ postData.title.rendered } src={ postData.featured_image_src }/>
 				</figure>
 				<h3 contentEditable="true" onBlur={ ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>

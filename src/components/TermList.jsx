@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import WpData from '../../data/WpData';
+import WpData from '../data/WpData';
 
 export default class TermList extends Component {
 	constructor() {

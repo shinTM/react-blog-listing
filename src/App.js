@@ -1,12 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ViewPort from './components/ViewPort/ViewPort.jsx';
-import WpData from './data/WpData';
+import ViewPort from './components/ViewPort.jsx';
 
 require('./../sass/style.scss');
-
-let wpData = new WpData();
-
 
 ReactDOM.render(
 	<ViewPort/>,
