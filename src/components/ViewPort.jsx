@@ -6,7 +6,8 @@ import PostList from './PostList.jsx';
 
 export default class ViewPort extends Component{
 	state = {
-		titleName: 'Blog Listing',
+		title: 'Blog',
+		subTitle: 'Blog Listing',
 		postList: null,
 		postPerPage: 4,
 		page: 1
@@ -30,7 +31,7 @@ export default class ViewPort extends Component{
 	render() {
 		return(
 			<div>
-				<h2>{ this.state.titleName }</h2>
+				<h2>{ this.state.title }</h2>
 				<Pagination
 					paginations={ this.state.postList }
 					postPerPage={ this.state.postPerPage }

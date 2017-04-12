@@ -16,9 +16,7 @@ export default class PostList extends Component {
 		let posts = postList.slice( page * postPerPage - postPerPage, page * postPerPage ).map( ( post, index ) => {
 
 			return(
-				<div key={ post.id } className="post">
-					<Post postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
-				</div>
+				<Post key={ index } postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
 			);
 		});
 
