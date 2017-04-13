@@ -5,12 +5,20 @@ import WpData from '../data/WpData';
 export default class PostList extends Component {
 
 	renderPostList() {
-		const { postList, page, postPerPage } = this.props;
+		let { postList, page, term, postPerPage } = this.props;
 
 		if ( null === postList ) {
 			return(
-				<h4>Loading...</h4>
+				<h4>Loading Posts...</h4>
 			)
+		}
+
+		if ( 'all' !== term ) {
+			postList = postList.filter( ( post ) => {
+				let categories = post.categories;
+
+				return -1 !== post.categories.indexOf( term );
+			} );
 		}
 
 		let posts = postList.slice( page * postPerPage - postPerPage, page * postPerPage ).map( ( post, index ) => {

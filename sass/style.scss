@@ -1,5 +1,7 @@
 @import "variables";
 @import "mixins";
+@import "post-list";
+@import "animations";
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700,500italic,500,400italic,300italic,300,100italic,100);
 
@@ -94,114 +96,4 @@ figure {
 		display: flex;
 		flex-flow: row wrap;
 	}
-}
-
-.back-btn {
-	font-size: 0;
-	line-height: 0;
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 36px 0 0;
-	background: none;
-	box-shadow: none;
-	border: none;
-	color: $blue-lighter;
-	@include transition(all .3s ease);
-
-	&:before {
-		@include material-icon;
-		font-size: 39px;
-		content: "\e5c4";
-		color: inherit;
-	}
-
-	&:hover {
-		color: $black;
-	}
-
-	&cross:before {
-		content: "\e5cd";
-	}
-}
-
-.terms-list {
-	ul {
-		display: flex;
-		@include reset-list;
-			li {
-				margin: 5px;
-			}
-	}
-}
-
-.post-list {
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
-
-	.post {
-		flex: 0 1 auto;
-		min-width: 25%;
-
-		.inner-wrapper {
-			margin: 5px;
-		}
-	}
-
-	.thumbnail {
-		margin-bottom: 20px;
-	}
-}
-
-.post-pagination {
-	@include reset-list;
-	display: flex;
-	justify-content: center;
-	margin: 0;
-	padding: 0 0 30px 0;
-
-		li {
-			width: 30px;
-			height: 30px;
-			margin-left: 1px;
-
-			a {
-				width: inherit;
-				height: inherit;
-				color: $white;
-				background-color: $gray;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				border:none;
-
-				&:hover {
-					background-color: $blue-lighter;
-				}
-			}
-
-			&.active a {
-				color: $white;
-				background-color: $blue-lighter;
-			}
-		}
-}
-
-.example-enter {
-  opacity: 0.01;
-}
-
-.example-enter.example-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.example-leave {
-  opacity: 1;
-}
-
-.example-leave.example-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
 }

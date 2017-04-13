@@ -10,6 +10,8 @@ export default class Post extends Component {
 		return(
 			<CSSTransitionGroup
 				transitionName="example"
+				transitionAppear={true}
+				transitionAppearTimeout={500}
 				transitionEnterTimeout={500}
 				transitionLeaveTimeout={300}>
 				<div key={ postData.id } className="post">

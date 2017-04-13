@@ -9,8 +9,10 @@ export default class ViewPort extends Component{
 		title: 'Blog',
 		subTitle: 'Blog Listing',
 		postList: null,
+		termList: null,
 		postPerPage: 4,
-		page: 1
+		page: 1,
+		term: 'all'
 	}
 
 	componentDidMount() {
@@ -26,6 +28,19 @@ export default class ViewPort extends Component{
 				alert( `Rejected: ${error}` );
 			}
 		);
+
+		WpData.getAllCategory().then(
+			response => {
+				let responseData = JSON.parse( response );
+
+				this.setState( {
+					termList: responseData
+				} );
+			},
+			error => {
+				alert(`Rejected: ${error}`);
+			}
+		);
 	}
 
 	render() {
@@ -38,7 +53,16 @@ export default class ViewPort extends Component{
 					onClick={ this.handlePaginationClick }
 					handlePageNumber={ this.state.page }
 				/>
-				<PostList postList={ this.state.postList } page={ this.state.page } postPerPage={ this.state.postPerPage }/>
+				<TermList
+					termList={ this.state.termList }
+					onClick={ this.handleTermClick }
+				/>
+				<PostList
+					postList={ this.state.postList }
+					page={ this.state.page }
+					term={ this.state.term }
+					postPerPage={ this.state.postPerPage }
+				/>
 			</div>
 		);
 	}
@@ -49,6 +73,14 @@ export default class ViewPort extends Component{
 		this.setState({
 			page: currentPage + 1
 		});
+	};
+
+	handleTermClick = ( currentTerm ) => ( event ) => {
+		console.log(currentTerm);
+
+		this.setState( {
+			term: currentTerm
+		} );
 	};
 
 }

@@ -2,39 +2,27 @@ import React, { Component, PropTypes } from 'react';
 import WpData from '../data/WpData';
 
 export default class TermList extends Component {
-	constructor() {
-		super();
-		this.state = {
-			categoryList: null
-		}
-		WpData.getAllCategory().then(
-			response => {
-				let responseData = JSON.parse( response );
-				this.setState({categoryList:responseData});
-			},
-			error => {
-				alert(`Rejected: ${error}`);
-			}
-		);
-	}
 
-	renderPostList() {
-		if ( null === this.state.categoryList ) {
+	renderTermList() {
+		const { termList, onClick } = this.props;
+
+		if ( null === termList ) {
 			return(
-				<h4>Loading...</h4>
+				<h4>Loading Term List...</h4>
 			)
 		}
 
-		let itemElements = this.state.categoryList.map( ( category, index ) => {
+		let itemElements = termList.map( ( term, index ) => {
+
 			return(
-				<li key={category.slug}>
-					<button onClick={this.termItemClick}>{category.name}</button>
+				<li key={term.slug}>
+					<button onClick={ onClick( term.id ) }>{ term.name }</button>
 				</li>
 			);
 		});
 
 		return(
-			<div className="terms-list">
+			<div className="term-list">
 				<ul>
 					{ itemElements }
 				</ul>
@@ -42,14 +30,10 @@ export default class TermList extends Component {
 		);
 	}
 
-	termItemClick( event ) {
-		console.log(event);
-	}
-
 	render() {
 		return(
 			<div>
-				{ this.renderPostList() }
+				{ this.renderTermList() }
 			</div>
 		);
 	}
