@@ -20,7 +20,7 @@ export default class PostList extends Component {
 		});
 
 		return(
-			<div className="post-list">
+			<div className="cherry-post-list">
 				{ posts }
 			</div>
 		);

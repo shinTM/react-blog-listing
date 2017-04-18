@@ -79,19 +79,19 @@ export default class ViewPort extends Component{
 		});
 	};
 
-	handleTermClick = ( currentCategory ) => ( event ) => {
+	handleTermClick = ( categoryId ) => ( event ) => {
 		let postList;
 
-		if ( 'all' !== currentCategory ) {
+		if ( 'all' !== categoryId ) {
 			postList = this.allPosts.filter( ( post ) => {
 				let categories = post.categories;
 
-				return -1 !== post.categories.indexOf( currentCategory );
+				return -1 !== post.categories.indexOf( categoryId );
 			} );
 		} else {
 			postList = this.allPosts;
 		}
-		console.log(postList);
+
 		this.setState( {
 			postList: postList,
 			page: 1

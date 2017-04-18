@@ -1,30 +1,19 @@
+#cherry-post-listing{
+	padding: 30px 0;
+	position: relative;
 
-.term-list {
+	h2 {
+		padding-right: 50px;
+	}
+}
+
+.cherry-post-category-list {
 	ul {
 		display: flex;
 		@include reset-list;
 			li {
 				margin: 5px;
 			}
-	}
-}
-
-.post-list {
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
-
-	.post {
-		flex: 0 1 auto;
-		min-width: 25%;
-
-		.inner-wrapper {
-			margin: 5px;
-		}
-	}
-
-	.thumbnail {
-		margin-bottom: 20px;
 	}
 }
 
@@ -40,10 +29,29 @@
 
 			button {
 				&.active {
-					color: $white;
+
 				}
 			}
 
 
 		}
+}
+
+.cherry-post-list {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+
+	.cherry-post {
+		flex: 0 1 auto;
+		min-width: 25%;
+
+		.inner-wrapper {
+			margin: 5px;
+		}
+	}
+
+	.thumbnail {
+		margin-bottom: 20px;
+	}
 }

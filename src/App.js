@@ -6,5 +6,5 @@ require('./../sass/style.scss');
 
 ReactDOM.render(
 	<ViewPort/>,
-	document.getElementById('blog-listing-page')
+	document.getElementById( 'cherry-post-listing' )
 );

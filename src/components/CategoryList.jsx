@@ -22,7 +22,7 @@ export default class CategoryList extends Component {
 		});
 
 		return(
-			<div className="term-list">
+			<div className="term-list cherry-post-category-list">
 				<ul>
 					{ itemElements }
 				</ul>
