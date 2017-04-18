@@ -5,7 +5,7 @@ import WpData from '../data/WpData';
 export default class PostList extends Component {
 
 	renderPostList() {
-		let { postList, page, term, postPerPage } = this.props;
+		let { postList, page, postPerPage } = this.props;
 
 		if ( null === postList ) {
 			return(
@@ -13,16 +13,7 @@ export default class PostList extends Component {
 			)
 		}
 
-		if ( 'all' !== term ) {
-			postList = postList.filter( ( post ) => {
-				let categories = post.categories;
-
-				return -1 !== post.categories.indexOf( term );
-			} );
-		}
-
 		let posts = postList.slice( page * postPerPage - postPerPage, page * postPerPage ).map( ( post, index ) => {
-
 			return(
 				<Post key={ index } postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
 			);
@@ -41,9 +32,7 @@ export default class PostList extends Component {
 
 	render() {
 		return(
-			<div>
-				{ this.renderPostList() }
-			</div>
+			this.renderPostList()
 		);
 	}
 

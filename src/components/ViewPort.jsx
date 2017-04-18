@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import WpData from '../data/WpData';
-import TermList from './TermList.jsx';
+import CategoryList from './CategoryList.jsx';
 import Pagination from './Pagination.jsx';
 import PostList from './PostList.jsx';
 
@@ -12,16 +12,22 @@ export default class ViewPort extends Component{
 		termList: null,
 		postPerPage: 4,
 		page: 1,
-		term: 'all'
+		category: 'all'
 	}
+
+	allPosts = null;
+
+	allCategories = null;
 
 	componentDidMount() {
 		WpData.getAllPosts().then(
 			response => {
 				let responseData = JSON.parse( response );
 
+				this.allPosts = responseData;
+
 				this.setState( {
-					postList: responseData
+					postList: this.allPosts
 				} );
 			},
 			error => {
@@ -48,19 +54,18 @@ export default class ViewPort extends Component{
 			<div>
 				<h2>{ this.state.title }</h2>
 				<Pagination
-					paginations={ this.state.postList }
+					postList={ this.state.postList }
 					postPerPage={ this.state.postPerPage }
 					onClick={ this.handlePaginationClick }
-					handlePageNumber={ this.state.page }
+					pageNumber={ this.state.page }
 				/>
-				<TermList
+				<CategoryList
 					termList={ this.state.termList }
 					onClick={ this.handleTermClick }
 				/>
 				<PostList
 					postList={ this.state.postList }
 					page={ this.state.page }
-					term={ this.state.term }
 					postPerPage={ this.state.postPerPage }
 				/>
 			</div>
@@ -68,18 +73,28 @@ export default class ViewPort extends Component{
 	}
 
 	handlePaginationClick = ( currentPage ) => ( event ) => {
-		event.preventDefault();
 
 		this.setState({
 			page: currentPage + 1
 		});
 	};
 
-	handleTermClick = ( currentTerm ) => ( event ) => {
-		console.log(currentTerm);
+	handleTermClick = ( currentCategory ) => ( event ) => {
+		let postList;
 
+		if ( 'all' !== currentCategory ) {
+			postList = this.allPosts.filter( ( post ) => {
+				let categories = post.categories;
+
+				return -1 !== post.categories.indexOf( currentCategory );
+			} );
+		} else {
+			postList = this.allPosts;
+		}
+		console.log(postList);
 		this.setState( {
-			term: currentTerm
+			postList: postList,
+			page: 1
 		} );
 	};
 

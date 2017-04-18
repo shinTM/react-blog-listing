@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import WpData from '../data/WpData';
 
-export default class TermList extends Component {
+export default class CategoryList extends Component {
 
-	renderTermList() {
+	renderCategoryList() {
 		const { termList, onClick } = this.props;
 
 		if ( null === termList ) {
@@ -33,7 +33,7 @@ export default class TermList extends Component {
 	render() {
 		return(
 			<div>
-				{ this.renderTermList() }
+				{ this.renderCategoryList() }
 			</div>
 		);
 	}
