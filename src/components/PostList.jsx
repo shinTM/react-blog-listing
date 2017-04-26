@@ -7,7 +7,7 @@ export default class PostList extends Component {
 	renderPostList() {
 		let { postList, page, postPerPage } = this.props;
 
-		if ( null === postList ) {
+		if ( ! postList || ! postList.length ) {
 			return(
 				<h4>Loading Posts...</h4>
 			)

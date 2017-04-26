@@ -12,13 +12,6 @@ import { changePageAction } from '../actions';
 import { updatePostListAction } from '../actions';
 
 class ViewPort extends Component{
-	state = {
-		postList: null,
-		termList: null,
-		//postPerPage: 4,
-		//page: 1,
-		category: 'all'
-	}
 
 	allPosts = null;
 
@@ -32,9 +25,8 @@ class ViewPort extends Component{
 
 				this.allPosts = responseData;
 
-				this.setState( {
-					postList: this.allPosts
-				} );
+				this.props.onUpdatePostList( this.allPosts )
+
 			},
 			error => {
 				alert( `Rejected: ${error}` );
@@ -56,36 +48,33 @@ class ViewPort extends Component{
 	}
 
 	render() {
-		console.log(this.props);
+
 		return(
 			<div>
 				<h2>Blog</h2>
-				<button className="inc" onClick={ this.props.increment }>-</button>
-				<button className="dec" onClick={ this.props.decrement }>+</button>
+				<button className="dec" onClick={ this.props.decrement }>-</button>
+				<button className="inc" onClick={ this.props.increment }>+</button>
 				<Pagination
-					postList={ this.state.postList }
-					postPerPage={ 4 }
-					onClick={ this.props.changePage }
-					page={ 1 }
+					postList = { this.props.postList }
+					postPerPage = { this.props.postPerPage }
+					page = { 1 }
+					onClick = { this.handlePaginationClick }
 				/>
 				{/*<CategoryList
 					termList={ this.state.termList }
 					onClick={ this.handleTermClick }
 				/>*/}
 				<PostList
-					postList={ this.state.postList }
-					page={ 1 }
-					postPerPage={ 4 }
+					postList={ this.props.postList }
+					postPerPage = { this.props.postPerPage }
+					page = { this.props.page }
 				/>
 			</div>
 		);
 	}
 
 	handlePaginationClick = ( currentPage ) => ( event ) => {
-
-		/*this.setState({
-			page: currentPage + 1
-		});*/
+		this.props.onChangePage( currentPage );
 	};
 
 	/*handleTermClick = ( categoryId ) => ( event ) => {
@@ -111,21 +100,21 @@ class ViewPort extends Component{
 
 export default connect(
 	state    => ( {
-		//testStore: state
+		postList: state.postList,
 		postPerPage: state.postPerPage,
-		//page: state.page
+		page: state.page
 	} ),
 	dispatch => ( {
 		increment: () => {
-			dispatch( incrementAction(1) );
+			dispatch( incrementAction( 1 ) );
 		},
 		decrement: () => {
-			dispatch( decrementAction(1) );
+			dispatch( decrementAction( 1 ) );
 		},
-		changePage: ( page ) => {
+		onChangePage: ( page ) => {
 			dispatch( changePageAction( page ) );
 		},
-		updatePostList: ( postList ) => {
+		onUpdatePostList: ( postList ) => {
 			dispatch( updatePostListAction( postList ) );
 		}
 	} )

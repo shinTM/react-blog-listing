@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 
 export default class Pagination extends Component{
 	render() {
-		const { postList, postPerPage, onClick, pageNumber } = this.props;
+		const { postList, postPerPage, pageNumber, onClick } = this.props;
 
-		if ( null === postList ) {
+		if ( ! postList || ! postList.length ) {
 			return <h4>Loading pagination...</h4>;
 		}
 
