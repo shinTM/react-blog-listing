@@ -1,17 +1,22 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+
 import WpData from '../data/WpData';
 import CategoryList from './CategoryList.jsx';
 import Pagination from './Pagination.jsx';
 import PostList from './PostList.jsx';
 
-export default class ViewPort extends Component{
+import { incrementAction } from '../actions';
+import { decrementAction } from '../actions';
+import { changePageAction } from '../actions';
+import { updatePostListAction } from '../actions';
+
+class ViewPort extends Component{
 	state = {
-		title: 'Blog',
-		subTitle: 'Blog Listing',
 		postList: null,
 		termList: null,
-		postPerPage: 4,
-		page: 1,
+		//postPerPage: 4,
+		//page: 1,
 		category: 'all'
 	}
 
@@ -20,6 +25,7 @@ export default class ViewPort extends Component{
 	allCategories = null;
 
 	componentDidMount() {
+
 		WpData.getAllPosts().then(
 			response => {
 				let responseData = JSON.parse( response );
@@ -35,7 +41,7 @@ export default class ViewPort extends Component{
 			}
 		);
 
-		WpData.getAllCategory().then(
+		/*WpData.getAllCategory().then(
 			response => {
 				let responseData = JSON.parse( response );
 
@@ -46,27 +52,30 @@ export default class ViewPort extends Component{
 			error => {
 				alert(`Rejected: ${error}`);
 			}
-		);
+		);*/
 	}
 
 	render() {
+		console.log(this.props);
 		return(
 			<div>
-				<h2>{ this.state.title }</h2>
+				<h2>Blog</h2>
+				<button className="inc" onClick={ this.props.increment }>-</button>
+				<button className="dec" onClick={ this.props.decrement }>+</button>
 				<Pagination
 					postList={ this.state.postList }
-					postPerPage={ this.state.postPerPage }
-					onClick={ this.handlePaginationClick }
-					pageNumber={ this.state.page }
+					postPerPage={ 4 }
+					onClick={ this.props.changePage }
+					page={ 1 }
 				/>
-				<CategoryList
+				{/*<CategoryList
 					termList={ this.state.termList }
 					onClick={ this.handleTermClick }
-				/>
+				/>*/}
 				<PostList
 					postList={ this.state.postList }
-					page={ this.state.page }
-					postPerPage={ this.state.postPerPage }
+					page={ 1 }
+					postPerPage={ 4 }
 				/>
 			</div>
 		);
@@ -74,12 +83,12 @@ export default class ViewPort extends Component{
 
 	handlePaginationClick = ( currentPage ) => ( event ) => {
 
-		this.setState({
+		/*this.setState({
 			page: currentPage + 1
-		});
+		});*/
 	};
 
-	handleTermClick = ( categoryId ) => ( event ) => {
+	/*handleTermClick = ( categoryId ) => ( event ) => {
 		let postList;
 
 		if ( 'all' !== categoryId ) {
@@ -96,6 +105,28 @@ export default class ViewPort extends Component{
 			postList: postList,
 			page: 1
 		} );
-	};
+	};*/
 
 }
+
+export default connect(
+	state    => ( {
+		//testStore: state
+		postPerPage: state.postPerPage,
+		//page: state.page
+	} ),
+	dispatch => ( {
+		increment: () => {
+			dispatch( incrementAction(1) );
+		},
+		decrement: () => {
+			dispatch( decrementAction(1) );
+		},
+		changePage: ( page ) => {
+			dispatch( changePageAction( page ) );
+		},
+		updatePostList: ( postList ) => {
+			dispatch( updatePostListAction( postList ) );
+		}
+	} )
+)( ViewPort );
