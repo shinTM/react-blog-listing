@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-import ViewPort from './components/ViewPort.jsx';
+import ViewPort from './components/ViewPort.js';
 
 import reducer from './reducers';
 

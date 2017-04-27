@@ -13,7 +13,6 @@ export default class Post extends Component {
 				transitionAppearTimeout={500}
 				transitionEnterTimeout={500}
 				transitionLeaveTimeout={300}>
-				<div key={ postData.id } className="cherry-post">
 					<div className="inner-wrapper">
 						<figure className="thumbnail">
 							<img alt={ postData.title.rendered } src={ postData.featured_image_src }/>
@@ -23,7 +22,6 @@ export default class Post extends Component {
 						<p>{ postData.content.rendered }</p>
 						<a href={ postData.link } className="post-permalink">More</a>
 					</div>
-				</div>
 			</CSSTransitionGroup>
 		);
 	}

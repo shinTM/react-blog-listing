@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import Post from './Post.jsx';
 import WpData from '../data/WpData';
+import Post from './Post.js';
+
 
 export default class PostList extends Component {
 
 	renderPostList() {
-		let { postList, page, postPerPage } = this.props;
+		let { postList } = this.props;
 
 		if ( ! postList || ! postList.length ) {
 			return(
@@ -13,9 +14,12 @@ export default class PostList extends Component {
 			)
 		}
 
-		let posts = postList.slice( page * postPerPage - postPerPage, page * postPerPage ).map( ( post, index ) => {
+	//	let posts = postList.slice( page * postPerPage - postPerPage, page * postPerPage ).map( ( post, index ) => {
+		let posts = postList.map( ( post, index ) => {
 			return(
-				<Post key={ index } postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
+				<div key={ index } className="cherry-post">
+					<Post  postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
+				</div>
 			);
 		});
 
