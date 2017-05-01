@@ -1,4 +1,7 @@
 export default class WpData {
+	static siteUrl = 'http://localhost:8888/cherry5-dev/';
+
+	static allPosts = [];
 
 	static getAllPosts() {
 		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=100`;
@@ -104,5 +107,3 @@ export default class WpData {
 
 
 }
-
-WpData.siteUrl = 'http://192.168.9.83/cherry5-develop';

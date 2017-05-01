@@ -12,7 +12,7 @@ import { updateTermListAction } from '../actions';
 
 class ViewPort extends Component{
 
-	allPosts = null;
+	static allPosts = null;
 
 	allCategories = null;
 
@@ -22,9 +22,9 @@ class ViewPort extends Component{
 			response => {
 				let responseData = JSON.parse( response );
 
-				this.allPosts = responseData;
+				WpData.allPosts = responseData;
 
-				this.props.onUpdatePostList( this.allPosts );
+				this.props.onUpdatePostList( WpData.allPosts );
 			},
 			error => {
 				alert( `Rejected: ${error}` );
@@ -45,7 +45,6 @@ class ViewPort extends Component{
 	}
 
 	render() {
-		console.log(this.props.tempState);
 		return(
 			<div>
 				<h2>Blog</h2>
@@ -60,10 +59,6 @@ class ViewPort extends Component{
 		);
 	}
 
-	/*handlePaginationClick = ( currentPage ) => ( event ) => {
-		this.props.onChangePage( currentPage );
-	};*/
-
 }
 
 export default connect(
@@ -73,9 +68,6 @@ export default connect(
 		termList: state.termList
 	} ),
 	dispatch => ( {
-		onChangePage: ( page ) => {
-			dispatch( changePageAction( page ) );
-		},
 		onUpdatePostList: ( postList ) => {
 			dispatch( updatePostListAction( postList ) );
 		},

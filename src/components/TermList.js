@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import WpData from '../data/WpData';
+
 import { updatePostListAction } from '../actions';
 
-class CategoryList extends Component {
+class TermList extends Component {
 
-	renderCategoryList() {
+	renderTermList() {
 		const { termList, onClick } = this.props;
 
 		if ( ! termList || ! termList.length ) {
@@ -14,23 +16,23 @@ class CategoryList extends Component {
 			)
 		}
 
-		let itemElements = termList.map( ( term, index ) => {
-			return(
-				<li key={ term.id }>
-					<button onClick={ this.onTermClick( term.id  ) }>{ term.name }</button>
-				</li>
-			);
-		});
-
 		return(
 			<ul>
-				{ itemElements }
+				{
+				termList.map( ( term, index ) => {
+					return(
+						<li key={ term.id }>
+							<button onClick={ this.onTermClick( term.id ) }>{ term.name }</button>
+						</li>
+					);
+				})
+				}
 			</ul>
 		);
 	}
 
 	onTermClick = ( categoryId ) => ( event ) => {
-		let postList = this.props.postList;
+		let postList = WpData.allPosts;
 
 		if ( 'all' !== categoryId ) {
 			postList = postList.filter( ( post ) => {
@@ -46,7 +48,7 @@ class CategoryList extends Component {
 	render() {
 		return(
 			<div className="term-list cherry-post-category-list">
-				{ this.renderCategoryList() }
+				{ this.renderTermList() }
 			</div>
 		);
 	}
@@ -62,5 +64,5 @@ export default connect(
 			dispatch( updatePostListAction( postList ) );
 		}
 	} )
-)( CategoryList );
+)( TermList );
 

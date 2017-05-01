@@ -9,6 +9,12 @@ export default function updatePostListReducer( state = initialState, action ) {
 			]
 			break;
 
+		case 'UPDATE_POST_LIST_BY_TEMR_ID':
+			return [
+				...state
+			]
+			break;
+
 		default:
 			return state;
 	}

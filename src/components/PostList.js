@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import WpData from '../data/WpData';
 import Post from './Post.js';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 
 export default class PostList extends Component {
@@ -18,7 +19,14 @@ export default class PostList extends Component {
 		let posts = postList.map( ( post, index ) => {
 			return(
 				<div key={ index } className="cherry-post">
-					<Post  postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
+					<CSSTransitionGroup
+						transitionName="example"
+						transitionAppear={true}
+						transitionAppearTimeout={500}
+						transitionEnterTimeout={500}
+						transitionLeaveTimeout={300}>
+					</CSSTransitionGroup>
+					<Post postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
 				</div>
 			);
 		});
@@ -39,6 +47,4 @@ export default class PostList extends Component {
 			this.renderPostList()
 		);
 	}
-
-
 }

@@ -13,12 +13,11 @@ class Pagination extends Component{
 		const pagItems = this.props.postList.map( ( pagination, i ) => {
 			return(
 				<li key={ i }>
-					<button className={ i === this.props.page - 1 ? 'active' : '' }>{ i + 1 }</button>
+					<button className={ i === this.props.page - 1 ? 'active' : '' } onClick={ this.onPaginationClick() }>{ i + 1 }</button>
 				</li>
 			);
 		} );
 
-		console.log(pagItems);
 		pagItems.length = Math.ceil( pagItems.length / this.props.postPerPage );
 
 		return(
@@ -26,6 +25,14 @@ class Pagination extends Component{
 				{ pagItems }
 			</ul>
 		);
+	}
+
+	onPaginationClick = ( page ) => ( event ) => {
+		let postList = WpData.allPosts;
+
+		postList = postList.slice( page * postPerPage - postPerPage, page * postPerPage );
+
+		this.props.onUpdatePostList( postList );
 	}
 }
 
