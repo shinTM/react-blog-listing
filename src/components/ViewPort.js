@@ -46,7 +46,7 @@ class ViewPort extends Component{
 		return(
 			<div>
 				<h2>Blog</h2>
-				<Pagination postList = { this.props.postList } page = { this.props.page } />
+				<Pagination postList = { this.props.postList } page = { this.props.page } onPageUpdate = { this.props.onPageUpdate } />
 				<TermList termList = { this.props.termList } />
 				<PostList postList = { this.props.postList } page = { this.props.page } />
 			</div>
@@ -70,7 +70,8 @@ export default connect(
 			dispatch( updateTermListAction( termList ) );
 		},
 		onPageUpdate: ( page ) => {
-			dispatch( changePageAction( page ) );
+			console.log(page);
+			dispatch( changePageAction( page + 1 ) );
 		}
 	} )
 )( ViewPort );

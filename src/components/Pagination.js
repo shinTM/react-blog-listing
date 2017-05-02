@@ -6,7 +6,7 @@ import Settings from '../data/Settings';
 export default class Pagination extends Component{
 
 	render() {
-		let { postList, page } = this.props;
+		let { postList, page, onPageUpdate } = this.props;
 
 		if ( ! postList || ! postList.length ) {
 			return <h4>Loading pagination...</h4>;
@@ -14,7 +14,7 @@ export default class Pagination extends Component{
 		const pagItems = postList.map( ( pagination, i ) => {
 			return(
 				<li key={ i }>
-					<button className={ i === page - 1 ? 'active' : '' }>{ i + 1 }</button>
+					<button className = { i === page - 1 ? 'active' : '' } onClick = { () => onPageUpdate( i ) }>{ i + 1 }</button>
 				</li>
 			);
 		} );

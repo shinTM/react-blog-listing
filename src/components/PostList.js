@@ -25,8 +25,8 @@ export default class PostList extends Component {
 						transitionAppearTimeout={500}
 						transitionEnterTimeout={500}
 						transitionLeaveTimeout={300}>
-					</CSSTransitionGroup>
-					<Post postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
+
+					<Post postData={ post } saveTitleHandler={ this.saveTitleHandler }/></CSSTransitionGroup>
 				</div>
 			);
 		});
