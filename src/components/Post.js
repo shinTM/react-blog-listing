@@ -12,7 +12,7 @@ export default class Post extends Component {
 				</figure>
 				{/*<h3 contentEditable="true" onBlur={ ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>*/}
 				<h3 onBlur={ ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>
-				<p>{ postData.content.rendered }</p>
+				<p dangerouslySetInnerHTML={{ __html: postData.content.rendered }}></p>
 				<a href={ postData.link } className="post-permalink">More</a>
 			</div>
 		);

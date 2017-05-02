@@ -6,15 +6,13 @@ import PostList from './PostList.js';
 import TermList from './termList.js';
 import Pagination from './Pagination.js';
 
+import Settings from '../data/Settings';
 
 import { updatePostListAction } from '../actions';
 import { updateTermListAction } from '../actions';
+import { changePageAction } from '../actions';
 
 class ViewPort extends Component{
-
-	static allPosts = null;
-
-	allCategories = null;
 
 	componentDidMount() {
 
@@ -24,7 +22,7 @@ class ViewPort extends Component{
 
 				WpData.allPosts = responseData;
 
-				this.props.onUpdatePostList( WpData.allPosts );
+				this.props.onUpdatePostList( responseData );
 			},
 			error => {
 				alert( `Rejected: ${error}` );
@@ -36,7 +34,7 @@ class ViewPort extends Component{
 				let responseData = JSON.parse( response );
 
 				this.allCategories = responseData;
-				this.props.onUpdateTermList( this.allCategories );
+				this.props.onUpdateTermList( responseData );
 			},
 			error => {
 				alert(`Rejected: ${error}`);
@@ -48,13 +46,9 @@ class ViewPort extends Component{
 		return(
 			<div>
 				<h2>Blog</h2>
-				<Pagination />
-				<TermList
-					termList = { this.props.termList }
-				/>
-				<PostList
-					postList={ this.props.postList }
-				/>
+				<Pagination postList = { this.props.postList } page = { this.props.page } />
+				<TermList termList = { this.props.termList } />
+				<PostList postList = { this.props.postList } page = { this.props.page } />
 			</div>
 		);
 	}
@@ -65,7 +59,8 @@ export default connect(
 	state    => ( {
 		tempState: state,
 		postList: state.postList,
-		termList: state.termList
+		termList: state.termList,
+		page: state.page
 	} ),
 	dispatch => ( {
 		onUpdatePostList: ( postList ) => {
@@ -73,6 +68,9 @@ export default connect(
 		},
 		onUpdateTermList: ( termList ) => {
 			dispatch( updateTermListAction( termList ) );
+		},
+		onPageUpdate: ( page ) => {
+			dispatch( changePageAction( page ) );
 		}
 	} )
 )( ViewPort );
