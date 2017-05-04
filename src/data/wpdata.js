@@ -1,5 +1,6 @@
 export default class WpData {
-	static siteUrl = 'http://localhost:8888/cherry5-dev/';
+	//static siteUrl = 'http://localhost:8888/cherry5-dev/';
+	static siteUrl = 'http://192.168.9.83/cherry5-develop/';
 
 	static allPosts = [];
 
@@ -22,7 +23,7 @@ export default class WpData {
 	}
 
 	static httpPostRequest( url ) {
-		var xhr = new XMLHttpRequest();
+		let xhr = new XMLHttpRequest();
 		xhr.open( 'POST', url, true );
 
 		let authorizationData = this.base64_encode( 'admin:1' );
@@ -50,7 +51,7 @@ export default class WpData {
 
 		return new Promise( function( resolve, reject ) {
 
-			var xhr = new XMLHttpRequest();
+			let xhr = new XMLHttpRequest();
 			xhr.open( 'GET', url, true );
 
 			xhr.onload = function() {

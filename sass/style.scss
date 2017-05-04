@@ -1,6 +1,7 @@
 @import "variables";
 @import "mixins";
 @import "post-list";
+@import "pagination";
 @import "animations";
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700,500italic,500,400italic,300italic,300,100italic,100);
@@ -8,8 +9,8 @@
 body{
 	font:14px $font-family-base;
 	letter-spacing:.1px;
-	color:$gray;
-	background:$gray-lighter;
+	color: $text_color;
+	background: $white;
 	margin:0;
 }
 
@@ -40,14 +41,6 @@ h3{
 	font-size:22px;
 	font-weight:500;
 	line-height: 1.6em;
-
-	a{
-		color:inherit;
-
-		&:hover {
-			color: $blue-lighter;
-		}
-	}
 }
 
 h4{

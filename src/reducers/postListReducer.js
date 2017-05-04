@@ -9,6 +9,12 @@ export default function( state = initialState, action ) {
 			]
 			break;
 
+		case 'ADD_MORE_POSTS':
+			return [
+				...state, ...action.postList
+			]
+			break;
+
 		default:
 			return state;
 	}

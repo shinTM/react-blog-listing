@@ -1,11 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import Term from './Term.js';
 import { connect } from 'react-redux';
 
 import WpData from '../data/WpData';
 
 import { updatePostListAction } from '../actions';
+import { changePageAction } from '../actions';
 
 class TermList extends Component {
+
+	activeTermsList = [];
 
 	renderTermList() {
 		const { termList, onClick } = this.props;
@@ -22,7 +26,7 @@ class TermList extends Component {
 				termList.map( ( term, index ) => {
 					return(
 						<li key={ term.id }>
-							<button onClick={ this.onTermClick( term.id ) }>{ term.name }</button>
+							<Term termId = { term.id } termName = { term.name } onTermClick = { this.onTermClick( term.id ) }/>
 						</li>
 					);
 				})
@@ -31,15 +35,29 @@ class TermList extends Component {
 		);
 	}
 
-	onTermClick = ( categoryId ) => ( event ) => {
+	onTermClick = ( termId ) => ( event ) => {
 		let postList = WpData.allPosts;
 
-		if ( 'all' !== categoryId ) {
-			postList = postList.filter( ( post ) => {
-				let categories = post.categories;
+		console.log(postList);
 
-				return -1 !== post.categories.indexOf( categoryId );
+		if ( ! this.activeTermsList.includes( termId ) ) {
+			this.activeTermsList.push( termId );
+		} else {
+			this.activeTermsList = this.activeTermsList.filter( value => value !== termId );
+		}
+
+		//console.log(this.activeTermsList);
+
+		if ( this.activeTermsList.length ) {
+			postList = postList.filter( ( post ) => {
+
+				for ( let category of post.categories ) {
+					if ( this.activeTermsList.includes( category ) ) {
+						return true;
+					}
+				}
 			} );
+
 		}
 
 		this.props.onUpdatePostList( postList );
@@ -47,7 +65,7 @@ class TermList extends Component {
 
 	render() {
 		return(
-			<div className="term-list cherry-post-category-list">
+			<div className="cherry-term-list">
 				{ this.renderTermList() }
 			</div>
 		);
@@ -62,6 +80,7 @@ export default connect(
 	dispatch => ( {
 		onUpdatePostList: ( postList ) => {
 			dispatch( updatePostListAction( postList ) );
+			dispatch( changePageAction( 1 ) );
 		}
 	} )
 )( TermList );

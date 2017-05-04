@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import WpData from '../data/WpData';
 import Post from './Post.js';
+
+import WpData from '../data/WpData';
 import Settings from '../data/Settings';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 

@@ -8,9 +8,7 @@ import Pagination from './Pagination.js';
 
 import Settings from '../data/Settings';
 
-import { updatePostListAction } from '../actions';
-import { updateTermListAction } from '../actions';
-import { changePageAction } from '../actions';
+import { updatePostListAction, updateTermListAction, changePageAction, incrementPageAction, decrementPageAction } from '../actions';
 
 class ViewPort extends Component{
 
@@ -46,7 +44,13 @@ class ViewPort extends Component{
 		return(
 			<div>
 				<h2>Blog</h2>
-				<Pagination postList = { this.props.postList } page = { this.props.page } onPageUpdate = { this.props.onPageUpdate } />
+				<Pagination
+					postList = { this.props.postList }
+					page = { this.props.page }
+					onPageUpdate = { this.props.onPageUpdate }
+					onPageIncrease = { this.props.onPageIncrease }
+					onPageDecrease = { this.props.onPageDecrease }
+				/>
 				<TermList termList = { this.props.termList } />
 				<PostList postList = { this.props.postList } page = { this.props.page } />
 			</div>
@@ -70,8 +74,13 @@ export default connect(
 			dispatch( updateTermListAction( termList ) );
 		},
 		onPageUpdate: ( page ) => {
-			console.log(page);
 			dispatch( changePageAction( page + 1 ) );
+		},
+		onPageIncrease: ( page ) => {
+			dispatch( incrementPageAction( 1 ) );
+		},
+		onPageDecrease: ( page ) => {
+			dispatch( decrementPageAction( 1 ) );
 		}
 	} )
 )( ViewPort );
