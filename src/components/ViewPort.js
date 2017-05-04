@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import WpData from '../data/WpData';
 import PostList from './PostList.js';
-import TermList from './termList.js';
+import TermFilterList from './termFilterList.js';
 import Pagination from './Pagination.js';
 
 import Settings from '../data/Settings';
@@ -44,6 +44,8 @@ class ViewPort extends Component{
 		return(
 			<div>
 				<h2>Blog</h2>
+				<TermFilterList termList = { this.props.termList } />
+				<PostList postList = { this.props.postList } page = { this.props.page } />
 				<Pagination
 					postList = { this.props.postList }
 					page = { this.props.page }
@@ -51,8 +53,6 @@ class ViewPort extends Component{
 					onPageIncrease = { this.props.onPageIncrease }
 					onPageDecrease = { this.props.onPageDecrease }
 				/>
-				<TermList termList = { this.props.termList } />
-				<PostList postList = { this.props.postList } page = { this.props.page } />
 			</div>
 		);
 	}

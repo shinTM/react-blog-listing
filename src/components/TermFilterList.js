@@ -7,7 +7,7 @@ import WpData from '../data/WpData';
 import { updatePostListAction } from '../actions';
 import { changePageAction } from '../actions';
 
-class TermList extends Component {
+class TermFilterList extends Component {
 
 	activeTermsList = [];
 
@@ -38,15 +38,11 @@ class TermList extends Component {
 	onTermClick = ( termId ) => ( event ) => {
 		let postList = WpData.allPosts;
 
-		console.log(postList);
-
 		if ( ! this.activeTermsList.includes( termId ) ) {
 			this.activeTermsList.push( termId );
 		} else {
 			this.activeTermsList = this.activeTermsList.filter( value => value !== termId );
 		}
-
-		//console.log(this.activeTermsList);
 
 		if ( this.activeTermsList.length ) {
 			postList = postList.filter( ( post ) => {
@@ -83,5 +79,5 @@ export default connect(
 			dispatch( changePageAction( 1 ) );
 		}
 	} )
-)( TermList );
+)( TermFilterList );
 
