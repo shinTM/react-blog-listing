@@ -9,7 +9,7 @@ export default class Pagination extends Component{
 		let { postList, page, onPageUpdate, onPageIncrease, onPageDecrease } = this.props;
 
 		if ( ! postList || ! postList.length ) {
-			return <h4>Loading pagination...</h4>;
+			return null;
 		}
 
 		const pagItems = postList.map( ( pagination, i ) => {

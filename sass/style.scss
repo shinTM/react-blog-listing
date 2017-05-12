@@ -14,9 +14,10 @@ body{
 	margin:0;
 }
 
-a{
-	text-decoration:none;
-	outline:0;
+a {
+	text-decoration: none;
+	outline: 0;
+	color: $accent_1;
 	@include transition(all .3s ease);
 }
 
@@ -40,7 +41,6 @@ h3{
 	margin:0 0 30px;
 	font-size:22px;
 	font-weight:500;
-	line-height: 1.6em;
 }
 
 h4{
@@ -55,12 +55,11 @@ h4{
 
 h5{
 	font-size:13px;
-	line-height:1.1;
 	margin:0;
 }
 
 .container{
-	padding:30px;
+	padding: 30px;
 	width: 100%;
 	margin: 0 auto;
 

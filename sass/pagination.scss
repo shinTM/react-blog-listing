@@ -10,9 +10,17 @@
 			span {
 				padding: 10px;
 				display: block;
-				border: 1px solid $border_color;
+				box-shadow: inset 0 0 0 1px $border_color;
 				cursor: pointer;
 				text-align: center;
+				@include transition( all .3s ease );
+
+				&:hover {
+					color: $accent_3;
+					background-color: $accent_1;
+					box-shadow: none;
+				}
+
 				&.active {
 					color: $accent_1;
 					background-color: $accent_3;
@@ -24,6 +32,7 @@
 				span {
 					color: $white;
 					background-color: $accent_1;
+					box-shadow: none;
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+
 export default class PostTermList extends Component {
 	render() {
 		let { termList, postTerms } = this.props;
@@ -20,7 +21,6 @@ export default class PostTermList extends Component {
 			);
 		} );
 
-		console.log(postTermList);
 		return(
 			<ul className = "cherry-post__terms">
 				{ postTermListRender }

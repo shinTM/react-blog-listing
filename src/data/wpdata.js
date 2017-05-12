@@ -1,6 +1,6 @@
 export default class WpData {
-	static siteUrl = 'http://localhost:8888/cherry5-dev/';
-	//static siteUrl = 'http://192.168.9.83/cherry5-develop/';
+	//static siteUrl = 'http://localhost:8888/cherry5-dev/';
+	static siteUrl = 'http://192.168.9.83/cherry5-develop/';
 
 	static allPosts = [];
 

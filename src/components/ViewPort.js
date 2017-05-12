@@ -19,7 +19,7 @@ class ViewPort extends Component{
 				let responseData = JSON.parse( response );
 
 				WpData.allPosts = responseData;
-
+				console.log(WpData.allPosts);
 				this.props.onUpdatePostList( responseData );
 			},
 			error => {
@@ -43,8 +43,10 @@ class ViewPort extends Component{
 	render() {
 		return(
 			<div>
-				<h2>Blog</h2>
-				<TermFilterList termList = { this.props.termList } />
+				<h2>Blog list</h2>
+				<div className = "cherry-post-controls">
+					<TermFilterList termList = { this.props.termList } />
+				</div>
 				<PostList postList = { this.props.postList } page = { this.props.page } />
 				<Pagination
 					postList = { this.props.postList }
