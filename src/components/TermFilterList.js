@@ -25,7 +25,7 @@ class TermFilterList extends Component {
 				{
 				termList.map( ( term, index ) => {
 					return(
-						<li key={ term.id }>
+						<li key = { term.id }>
 							<Term termId = { term.id } termName = { term.name } onTermClick = { this.onTermClick( term.id ) }/>
 						</li>
 					);
@@ -61,7 +61,7 @@ class TermFilterList extends Component {
 
 	render() {
 		return(
-			<div className="cherry-term-list">
+			<div className="cherry-post-controls__term-list">
 				{ this.renderTermList() }
 			</div>
 		);

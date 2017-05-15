@@ -7,3 +7,5 @@ export const changePageAction = ( page ) => ( { type: 'UPDATE_PAGE', page } );
 export const incrementPageAction = ( amount ) => ( { type: 'INCREMENT_PAGE', amount } );
 
 export const decrementPageAction = ( amount ) => ( { type: 'DECREMENT_PAGE', amount } );
+
+export const changeLayoutAction = ( layout ) => ( { type: 'UPDATE_LAYOUT', layout } );

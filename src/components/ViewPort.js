@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 
 import WpData from '../data/WpData';
 import PostList from './PostList.js';
-import TermFilterList from './termFilterList.js';
+import TermFilterList from './TermFilterList.js';
+import LayoutTypeFilter from './LayoutTypeFilter.js';
 import Pagination from './Pagination.js';
 
 import Settings from '../data/Settings';
 
-import { updatePostListAction, updateTermListAction, changePageAction, incrementPageAction, decrementPageAction } from '../actions';
+import { updatePostListAction, updateTermListAction, changePageAction, incrementPageAction, decrementPageAction, changeLayoutAction } from '../actions';
 
 class ViewPort extends Component{
 
@@ -46,8 +47,12 @@ class ViewPort extends Component{
 				<h2>Blog list</h2>
 				<div className = "cherry-post-controls">
 					<TermFilterList termList = { this.props.termList } />
+					<LayoutTypeFilter
+						layout = { this.props.layout }
+						onLayoutUpdate = { this.props.onLayoutUpdate }
+					/>
 				</div>
-				<PostList postList = { this.props.postList } page = { this.props.page } />
+				<PostList postList = { this.props.postList } page = { this.props.page } layout = { this.props.layout } />
 				<Pagination
 					postList = { this.props.postList }
 					page = { this.props.page }
@@ -66,7 +71,8 @@ export default connect(
 		tempState: state,
 		postList: state.postList,
 		termList: state.termList,
-		page: state.page
+		page: state.page,
+		layout: state.layout
 	} ),
 	dispatch => ( {
 		onUpdatePostList: ( postList ) => {
@@ -83,6 +89,10 @@ export default connect(
 		},
 		onPageDecrease: ( page ) => {
 			dispatch( decrementPageAction( 1 ) );
+		},
+		onLayoutUpdate: ( layout ) => {
+			console.log(layout);
+			dispatch( changeLayoutAction( layout ) );
 		}
 	} )
 )( ViewPort );

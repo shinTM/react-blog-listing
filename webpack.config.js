@@ -3,6 +3,10 @@ var path = require('path');
 module.exports = {
     devtool: 'source-map',
 
+    dependencies: [
+        path.join(__dirname, "../", "node_modules")
+    ],
+
     entry: [
         './src/App.js'
     ],
@@ -28,7 +32,10 @@ module.exports = {
             {
                 test: /\.js/,
                 loaders: ['babel'],
-                include: path.join(__dirname, 'src')
+                include: [
+                    path.join(__dirname, 'src'),
+                    path.join(__dirname, 'node_modules/react-icons')
+                ]
             }
         ]
     }

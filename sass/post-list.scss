@@ -9,50 +9,76 @@
 
 .cherry-post-controls {
 	margin-bottom: 20px;
-}
+	display: flex;
+	justify-content: space-between;
 
-.cherry-term-list {
-	ul {
-		display: flex;
-		@include reset-list;
-			li {
-				margin: 2px;
-				span {
-					padding: 5px 10px;
-					display: block;
-					box-shadow: inset 0 0 0 1px $border_color;
-					cursor: pointer;
-					text-align: center;
-					@include transition( all .3s ease );
+	&__term-list {
+		ul {
+			display: flex;
+			@include reset-list;
 
-					i {
-						margin-left: 5px;
+				li {
+					margin-right: 2px;
+
+					&:last-child {
+						margin-right: 0;
 					}
 
-					&:not( .active ):hover {
-						color: $accent_3;
-						background-color: $accent_1;
-						box-shadow: none;
-					}
+					span {
+						padding: 5px 10px;
+						display: block;
+						box-shadow: inset 0 0 0 1px $border_color;
+						cursor: pointer;
+						text-align: center;
+						@include transition( all .3s ease );
 
-					&.active {
-						color: $accent_1;
-						background-color: $accent_3;
+						i {
+							margin-left: 5px;
+						}
+
+						&:not( .active ):hover {
+							color: $accent_1;
+							background-color: $accent_3;
+						}
+
+						&.active {
+							color: $accent_3;
+							background-color: $accent_1;
+							box-shadow: none;
+						}
 					}
 				}
+		}
+	}
+
+	&__layout-type {
+
+		.inner {
+			display: flex;
+		}
+
+		.layout-type-item {
+			padding: 5px;
+			box-shadow: inset 0 0 0 1px $border_color;
+			cursor: pointer;
+			margin-left: 2px;
+			@include transition( all .3s ease );
+
+			&:not( .active ):hover {
+				color: $accent_1;
+				background-color: $accent_3;
 			}
+
+			&.active {
+				color: $accent_3;
+				background-color: $accent_1;
+				box-shadow: none;
+			}
+		}
 	}
 }
 
 .cherry-post-list {
-
-	.cherry-post {
-		width: 25%;
-
-		.inner-wrapper {
-			margin: 5px;
-		}
-	}
 
 	&--grid {
 		display: flex;
@@ -60,15 +86,47 @@
 		align-items: flex-start;
 		flex-flow: row wrap;
 		margin-bottom: 20px;
+		margin-left: -10px;
+		margin-right: -10px;
+
+		.cherry-post {
+			width: 25%;
+
+			.inner-wrapper {
+				margin: 0 10px 30px 10px;
+			}
+		}
 	}
 
-	&--masonry {
-		display: flex;
-		flex-direction: column;
-		flex-wrap: wrap;
-		height: 100vw;
-		max-height: 800px;
-		font-size: 0;
+	&--columns {
+		column-count: 4;
+		column-gap: 20px;
+
+		.cherry-post {
+			display: inline-block;
+
+			.inner-wrapper {
+				margin: 0 0 30px 0;
+			}
+		}
+	}
+
+	&--list {
+		.cherry-post {
+			.inner-wrapper {
+				margin-bottom: 40px;
+				padding-bottom: 40px;
+				border-bottom: 1px solid $border_color;
+			}
+
+			&:last-child {
+				.inner-wrapper {
+					margin-bottom: 0;
+					padding-bottom: 0;
+					border-bottom: none;
+				}
+			}
+		}
 	}
 }
 

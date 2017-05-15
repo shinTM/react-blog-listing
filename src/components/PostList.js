@@ -8,7 +8,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 export default class PostList extends Component {
 
 	renderPostList() {
-		let { postList, page } = this.props,
+		let { postList, page, layout } = this.props,
 			postPerPage = Settings.defaultSettings.postPerPage;
 
 		if ( ! postList || ! postList.length ) {
@@ -33,7 +33,8 @@ export default class PostList extends Component {
 			);
 		});
 
-		let postsListClasses = `cherry-post-list cherry-post-list--${ Settings.defaultSettings.listingLayout }`;
+		let postsListClasses = `cherry-post-list cherry-post-list--${ layout }`;
+
 		return(
 			<div className = { postsListClasses }>
 				{ posts }
