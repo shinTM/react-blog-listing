@@ -18,9 +18,11 @@ export default class PostList extends Component {
 		}
 
 		let posts = postList.slice( page * postPerPage - postPerPage, page * postPerPage ).map( ( post, index ) => {
-			let postClasses = `cherry-post ${ post.format }-post`;
+			let orderCountClass = index % 2 == 0 ? 'cherry-post--even' : 'cherry-post--odd';
+			let postClasses = `cherry-post ${ post.format }-format ${ orderCountClass }`;
+
 			return(
-				<div key={ index } className = { postClasses }>
+				<div key = { index } className = { postClasses }>
 					{/*<CSSTransitionGroup
 						transitionName="example"
 						transitionAppear={true}
@@ -28,7 +30,10 @@ export default class PostList extends Component {
 						transitionEnterTimeout={500}
 						transitionLeaveTimeout={300}>
 					</CSSTransitionGroup>*/}
-					<Post postData={ post } saveTitleHandler={ this.saveTitleHandler }/>
+					<Post
+						postData = { post }
+						saveTitleHandler = { this.saveTitleHandler }
+					/>
 				</div>
 			);
 		});

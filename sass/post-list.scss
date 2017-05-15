@@ -79,13 +79,13 @@
 }
 
 .cherry-post-list {
+	margin-bottom: 30px;
 
 	&--grid {
 		display: flex;
 		justify-content: justify-content;
 		align-items: flex-start;
 		flex-flow: row wrap;
-		margin-bottom: 20px;
 		margin-left: -10px;
 		margin-right: -10px;
 
@@ -111,6 +111,38 @@
 		}
 	}
 
+	&--timeline {
+		position: relative;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		padding: 30px 0;
+
+		&:before {
+			width: 1px;
+			height: 100%;
+			display: block;
+			position: absolute;
+			background-color: $border_color;
+			top: 0;
+			left: 50%;
+			content: "";
+		}
+
+		.cherry-post {
+			width: 48%;
+
+			&--even {
+
+			}
+
+			&--odd {
+
+			}
+
+		}
+	}
+
 	&--list {
 		.cherry-post {
 			.inner-wrapper {
@@ -124,6 +156,11 @@
 					margin-bottom: 0;
 					padding-bottom: 0;
 					border-bottom: none;
+				}
+			}
+			&__thumbnail {
+				img {
+					min-width: 100%;
 				}
 			}
 		}
