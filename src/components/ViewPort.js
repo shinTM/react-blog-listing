@@ -1,15 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 import WpData from '../data/WpData';
 import PostList from './PostList.js';
 import TermFilterList from './TermFilterList.js';
 import LayoutTypeFilter from './LayoutTypeFilter.js';
 import Pagination from './Pagination.js';
+import MoreButton from './MoreButton.js';
 
 import Settings from '../data/Settings';
 
-import { updatePostListAction, updateTermListAction, changePageAction, incrementPageAction, decrementPageAction, changeLayoutAction } from '../actions';
+import { updatePostListAction, updateTermListAction, changePageAction, incrementPageAction, decrementPageAction, changeLayoutAction, addMorePostsAction } from '../actions';
 
 class ViewPort extends Component{
 
@@ -20,7 +22,6 @@ class ViewPort extends Component{
 				let responseData = JSON.parse( response );
 
 				WpData.allPosts = responseData;
-				console.log(WpData.allPosts);
 				this.props.onUpdatePostList( responseData );
 			},
 			error => {
@@ -41,11 +42,47 @@ class ViewPort extends Component{
 		);
 	}
 
+	getViewMoreControl() {
+		let viewMoreControl = <Pagination
+			postList = { this.props.postList }
+			page = { this.props.page }
+			onPageUpdate = { this.props.onPageUpdate }
+			onPageIncrease = { this.props.onPageIncrease }
+			onPageDecrease = { this.props.onPageDecrease }
+		/>;
+
+		if ( 'more-button' === Settings.defaultSettings.viewNextType ) {
+			viewMoreControl = <MoreButton onLoadMore = { this.props.onLoadMore }/>
+		}
+
+		return viewMoreControl;
+	}
+
+	getPosts() {
+		WpData.getPosts().then(
+			response => {
+				let responseData = JSON.parse( response );
+				console.log(responseData);
+			},
+			error => {
+				alert( `Rejected: ${error}` );
+			}
+		);
+	}
+
 	render() {
 		return(
 			<div>
+			<button onClick={ ( event ) => { this.getPosts() } }>test</button>
+				{/*<CSSTransitionGroup
+					transitionName = "example"
+					transitionAppear = { true }
+					transitionAppearTimeout = { 500 }
+					transitionEnterTimeout = { 500 }
+					transitionLeaveTimeout = { 300 }>
+				</CSSTransitionGroup>*/}
 				<h2>Blog list</h2>
-				<div className = "cherry-post-controls">
+				<div className = "cherry-post-filters">
 					<TermFilterList termList = { this.props.termList } />
 					<LayoutTypeFilter
 						layout = { this.props.layout }
@@ -53,17 +90,12 @@ class ViewPort extends Component{
 					/>
 				</div>
 				<PostList postList = { this.props.postList } page = { this.props.page } layout = { this.props.layout } />
-				<Pagination
-					postList = { this.props.postList }
-					page = { this.props.page }
-					onPageUpdate = { this.props.onPageUpdate }
-					onPageIncrease = { this.props.onPageIncrease }
-					onPageDecrease = { this.props.onPageDecrease }
-				/>
+				<div className = "cherry-post-controls">
+					{this.getViewMoreControl()}
+				</div>
 			</div>
 		);
 	}
-
 }
 
 export default connect(
@@ -91,8 +123,10 @@ export default connect(
 			dispatch( decrementPageAction( 1 ) );
 		},
 		onLayoutUpdate: ( layout ) => {
-			console.log(layout);
 			dispatch( changeLayoutAction( layout ) );
+		},
+		onLoadMore: () => {
+			dispatch( addMorePostsAction() );
 		}
 	} )
 )( ViewPort );

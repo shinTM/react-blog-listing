@@ -1,9 +1,16 @@
 export default class Settings {
 
 	static defaultSettings = {
-		'listingLayout': 'grid',
-		'postPerPage':   6,
-		'columns':       4
+		listingLayout: 'grid',
+		postPerPage:   8,
+		columns: {
+			'columns_desktop':         4,
+			'columns_laptop':          4,
+			'columns_album_tablet':    3,
+			'columns_portrait_tablet': 2,
+			'columns_mobile':          1
+		},
+		viewNextType: 'pagination'
 	}
 
 	static listingLayoutsSettings = [

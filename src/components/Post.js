@@ -4,36 +4,39 @@ import FontAwesome from 'react-fontawesome';
 
 import PostTermList from './post-components/PostTermList.js';
 
+import PostGridType from './post-view/PostGridType.js';
+import PostColumnsType from './post-view/PostColumnsType.js';
+import PostTimelineType from './post-view/PostTimelineType.js';
+import PostListType from './post-view/PostListType.js';
+
 import WpData from '../data/WpData';
 
 class Post extends Component {
 
 	render() {
-		const { postData, saveTitleHandler } = this.props;
+		const { index, postData, layout, saveTitleHandler } = this.props;
+		let orderCountClass = index % 2 == 0 ? 'cherry-post--even' : 'cherry-post--odd';
+		let postClasses = `cherry-post ${ postData.format }-format ${ orderCountClass }`;
+		let post = null;
+
+		switch ( layout ) {
+			case 'grid':
+				post = <PostGridType postData = { postData } termList = { this.props.termList } />;
+				break;
+			case 'columns':
+				post = <PostColumnsType postData = { postData } termList = { this.props.termList } />;
+				break;
+			case 'timeline':
+				post = <PostTimelineType postData = { postData } termList = { this.props.termList } />;
+				break;
+			default :
+				post = <PostListType postData = { postData } termList = { this.props.termList } />;
+				break;
+		}
 
 		return(
-			<div className="inner-wrapper">
-				<div className = "cherry-post__media">
-					<figure className = "cherry-post__thumbnail">
-						<img alt = { postData.title.rendered } src = { postData.featured_image_src }/>
-					</figure>
-				</div>
-				<div className = "cherry-post__content">
-					<div className = "cherry-post__meta-info">
-						<span className = "post-meta-item post-meta-item--author">
-							<FontAwesome tag = 'i' name = 'user' /> <a href = { postData.author_data.author_link }>{ postData.author_data.display_name }</a>
-						</span>
-						<span className = "post-meta-item post-meta-item--date">
-							<FontAwesome tag = 'i' name = 'clock-o' />
-							{ postData.custom_format_date }
-						</span>
-					</div>
-					<PostTermList termList = { this.props.termList } postTerms = { postData.categories } />
-					{/*<h3 contentEditable="true" onBlur={ ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>*/}
-					<h3 className = "cherry-post__title" onBlur = { ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>
-					<p className = "cherry-post__content" dangerouslySetInnerHTML = {{ __html: postData.trimed_content }}></p>
-					<a className = "cherry-post__permalink" href = { postData.link }>More</a>
-				</div>
+			<div className = { postClasses }>
+				{ post }
 			</div>
 		);
 	}

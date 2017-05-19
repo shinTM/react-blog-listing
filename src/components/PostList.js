@@ -3,13 +3,16 @@ import Post from './Post.js';
 import FontAwesome from 'react-fontawesome';
 import WpData from '../data/WpData';
 import Settings from '../data/Settings';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 export default class PostList extends Component {
 
-	renderPostList() {
+	saveTitleHandler = ( id, event ) => {
+		WpData.setTitleData( id, event.target.innerText );
+	}
+
+	render() {
 		let { postList, page, layout } = this.props,
-			postPerPage = Settings.defaultSettings.postPerPage;
+		postPerPage = Settings.defaultSettings.postPerPage;
 
 		if ( ! postList || ! postList.length ) {
 			return(
@@ -17,43 +20,23 @@ export default class PostList extends Component {
 			)
 		}
 
-		let posts = postList.slice( page * postPerPage - postPerPage, page * postPerPage ).map( ( post, index ) => {
-			let orderCountClass = index % 2 == 0 ? 'cherry-post--even' : 'cherry-post--odd';
-			let postClasses = `cherry-post ${ post.format }-format ${ orderCountClass }`;
-
-			return(
-				<div key = { index } className = { postClasses }>
-					{/*<CSSTransitionGroup
-						transitionName="example"
-						transitionAppear={true}
-						transitionAppearTimeout={500}
-						transitionEnterTimeout={500}
-						transitionLeaveTimeout={300}>
-					</CSSTransitionGroup>*/}
-					<Post
-						postData = { post }
-						saveTitleHandler = { this.saveTitleHandler }
-					/>
-				</div>
-			);
-		});
-
 		let postsListClasses = `cherry-post-list cherry-post-list--${ layout }`;
+		let avaliablePosts = postList.slice( page * postPerPage - postPerPage, page * postPerPage );
+
+		const posts = avaliablePosts.map( ( post, index ) => (
+			<Post
+				key = { index }
+				index = { index }
+				postData = { post }
+				layout = { layout }
+				saveTitleHandler = { this.saveTitleHandler }
+			/>
+		));
 
 		return(
 			<div className = { postsListClasses }>
 				{ posts }
 			</div>
-		);
-	}
-
-	saveTitleHandler = ( id, event ) => {
-		WpData.setTitleData( id, event.target.innerText );
-	}
-
-	render() {
-		return(
-			this.renderPostList()
 		);
 	}
 }

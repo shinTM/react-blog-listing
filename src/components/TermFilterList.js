@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 
 import WpData from '../data/WpData';
 
-import { updatePostListAction } from '../actions';
-import { changePageAction } from '../actions';
+import { changePageAction, updatePostListAction } from '../actions';
 
 class TermFilterList extends Component {
 
@@ -47,13 +46,12 @@ class TermFilterList extends Component {
 		if ( this.activeTermsList.length ) {
 			postList = postList.filter( ( post ) => {
 
-				for ( let category of post.categories ) {
-					if ( this.activeTermsList.includes( category ) ) {
-						return true;
-					}
+			for ( let category of post.categories ) {
+				if ( this.activeTermsList.includes( category ) ) {
+					return true;
 				}
+			}
 			} );
-
 		}
 
 		this.props.onUpdatePostList( postList );
@@ -61,7 +59,7 @@ class TermFilterList extends Component {
 
 	render() {
 		return(
-			<div className="cherry-post-controls__term-list">
+			<div className="cherry-post-filters__term-list">
 				{ this.renderTermList() }
 			</div>
 		);
@@ -70,7 +68,6 @@ class TermFilterList extends Component {
 
 export default connect(
 	state    => ( {
-		tempState: state,
 		postList: state.postList
 	} ),
 	dispatch => ( {

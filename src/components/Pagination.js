@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 
 import Settings from '../data/Settings';
 
@@ -27,7 +26,7 @@ export default class Pagination extends Component{
 		let nextButton = ( page < pagItems.length ) ? <li className="next-page" onClick = { ( event ) => onPageIncrease() }><span>Next</span></li> : '';
 
 		return(
-			<ul className="cherry-post-list-pagination">
+			<ul className="cherry-post-controls__pagination">
 				{ prevButton }
 				{ pagItems }
 				{ nextButton }

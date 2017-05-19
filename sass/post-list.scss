@@ -7,7 +7,7 @@
 	}
 }
 
-.cherry-post-controls {
+.cherry-post-filters {
 	margin-bottom: 20px;
 	display: flex;
 	justify-content: space-between;
@@ -113,9 +113,6 @@
 
 	&--timeline {
 		position: relative;
-		display: flex;
-		flex-flow: row wrap;
-		justify-content: space-between;
 		padding: 30px 0;
 
 		&:before {
@@ -130,25 +127,71 @@
 		}
 
 		.cherry-post {
-			width: 48%;
+			position: relative;
+			margin-bottom: 50px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			.inner-wrapper {
+				display: flex;
+				justify-content: space-between;
+				align-content: flex-start;
+				align-items: flex-start;
+			}
+
+			&__meta-info {
+				width: 48%;
+				margin: 0;
+				border: none;
+			}
+
+			&__content {
+				width: 48%;
+			}
 
 			&--even {
-
+				.cherry-post__meta-info {
+					text-align: right;
+				}
 			}
 
 			&--odd {
-
+				.cherry-post__meta-info {
+					order: 2;
+				}
+				.cherry-post__content {
+					text-align: right;
+				}
+				.cherry-post__terms {
+					justify-content: flex-end;
+				}
 			}
 
+			&:before {
+				position: absolute;
+				display: block;
+				width: 20px;
+				height: 20px;
+				top: 3px;
+				left: 50%;
+				margin-left: -9px;
+				border-radius: 50%;
+				background-color: $white;
+				box-shadow: inset 0 0 0 4px $accent_1;
+				content: "";
+			}
 		}
 	}
 
 	&--list {
 		.cherry-post {
 			.inner-wrapper {
+				display: flex;
 				margin-bottom: 40px;
-				padding-bottom: 40px;
-				border-bottom: 1px solid $border_color;
+				padding-bottom: 30px;
+				border-bottom: 1px dotted $border_color;
 			}
 
 			&:last-child {
@@ -163,6 +206,77 @@
 					min-width: 100%;
 				}
 			}
+			&__media {
+				max-width: 300px;
+				margin: 0 30px 0 0;
+			}
+			&__content {
+
+			}
+			&--even {
+
+			}
+			&--odd {
+				.cherry-post__media {
+					order: 2;
+					margin: 0 0 0 30px;
+				}
+			}
+		}
+	}
+}
+
+.cherry-post-controls {
+	&__pagination {
+		@include reset-list;
+		display: flex;
+		justify-content: center;
+		margin: 0;
+		padding: 0 0 30px 0;
+
+			li {
+				margin: 2px;
+				span {
+					padding: 10px;
+					display: block;
+					box-shadow: inset 0 0 0 1px $border_color;
+					cursor: pointer;
+					text-align: center;
+					@include transition( all .3s ease );
+
+					&:hover {
+						color: $accent_3;
+						background-color: $accent_1;
+						box-shadow: none;
+					}
+
+					&.active {
+						color: $accent_1;
+						background-color: $accent_3;
+						pointer-events: none;
+					}
+				}
+
+				&.prev-page, &.next-page {
+					span {
+						color: $white;
+						background-color: $accent_1;
+						box-shadow: none;
+					}
+				}
+			}
+	}
+
+	&__more-button {
+		display: flex;
+		justify-content: center;
+		.more-button {
+			padding: 15px 20px;
+			color: $white;
+			background-color: $accent_1;
+			box-shadow: inset 0 0 0 1px $border_color;
+			@include transition( all .3s ease );
+			cursor: pointer;
 		}
 	}
 }

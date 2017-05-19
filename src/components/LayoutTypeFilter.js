@@ -12,8 +12,6 @@ export default class LayoutTypeFilter extends Component {
 			<div className = "inner">
 				{
 					Settings.listingLayoutsSettings.map( ( layoutItem, index ) => {
-						console.log(layout);
-						console.log(layout.name);
 						let itemClasses = `layout-type-item layout-type-item--${ layoutItem.name } ${ layout == layoutItem.name ? ' active' : '' }`;
 
 						return (
@@ -25,12 +23,11 @@ export default class LayoutTypeFilter extends Component {
 				}
 			</div>
 		);
-
 	}
 
 	render() {
 		return(
-			<div className = "cherry-post-controls__layout-type">
+			<div className = "cherry-post-filters__layout-type">
 				{ this.layoutsList() }
 			</div>
 		);

@@ -1,8 +1,12 @@
+import Settings from '../data/Settings';
+
 export default class WpData {
-	static siteUrl = 'http://localhost:8888/cherry5-dev/';
-	//static siteUrl = 'http://192.168.9.83/cherry5-develop/';
+	//static siteUrl = 'http://localhost:8888/cherry5-dev/';
+	static siteUrl = 'http://192.168.9.83/cherry5-develop/';
 
 	static allPosts = [];
+
+	static xhr = new XMLHttpRequest();
 
 	static getAllPosts() {
 		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=100`;
@@ -16,6 +20,20 @@ export default class WpData {
 		return this.httpGetRequest( url );
 	}
 
+	static getPosts( queryParams = {} ) {
+		let defaultsQueryParams = {
+			page: 1,
+			postPerPage: Settings.defaultSettings.postPerPage,
+			categories: {}
+		}
+
+		let mergedQueryParams = Object.assign( defaultsQueryParams, queryParams );
+
+		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=${ mergedQueryParams.postPerPage }&page=${ mergedQueryParams.page }`;
+
+		return this.httpGetRequest( url );
+	}
+
 	static setTitleData( id, title ) {
 		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts/${ id }?title=${ title }`;
 
@@ -23,14 +41,14 @@ export default class WpData {
 	}
 
 	static httpPostRequest( url ) {
-		let xhr = new XMLHttpRequest();
-		xhr.open( 'POST', url, true );
+		WpData.xhr = new XMLHttpRequest();
+		WpData.xhr.open( 'POST', url, true );
 
 		let authorizationData = this.base64_encode( 'admin:1' );
 
-		xhr.setRequestHeader( 'Authorization', 'Basic ' + authorizationData );
+		WpData.xhr.setRequestHeader( 'Authorization', 'Basic ' + authorizationData );
 
-		xhr.onload = function() {
+		WpData.xhr.onload = function() {
 			if (this.status == 200) {
 				console.log('updated');
 			} else {
@@ -40,21 +58,21 @@ export default class WpData {
 			}
 		};
 
-		xhr.onerror = function() {
+		WpData.xhr.onerror = function() {
 			new Error( 'Network Error' )
 		};
 
-		xhr.send();
+		WpData.xhr.send();
 	}
 
 	static httpGetRequest( url ) {
 
 		return new Promise( function( resolve, reject ) {
 
-			let xhr = new XMLHttpRequest();
-			xhr.open( 'GET', url, true );
+			WpData.xhr = new XMLHttpRequest();
+			WpData.xhr.open( 'GET', url, true );
 
-			xhr.onload = function() {
+			WpData.xhr.onload = function() {
 				if (this.status == 200) {
 					resolve(this.response);
 				} else {
@@ -65,11 +83,11 @@ export default class WpData {
 				}
 			};
 
-			xhr.onerror = function() {
+			WpData.xhr.onerror = function() {
 				reject( new Error( 'Network Error' ) );
 			};
 
-			xhr.send();
+			WpData.xhr.send();
 		} );
 
 	}
