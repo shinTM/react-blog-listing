@@ -11,6 +11,8 @@ import PostListType from './post-view/PostListType.js';
 
 import WpData from '../data/WpData';
 
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+
 class Post extends Component {
 
 	render() {
@@ -36,7 +38,16 @@ class Post extends Component {
 
 		return(
 			<div className = { postClasses }>
+				<CSSTransitionGroup
+					transitionName = "example"
+					transitionAppear = { true }
+					transitionEnter = { true }
+					transitionLeave = { true }
+					transitionAppearTimeout = { 500 }
+					transitionEnterTimeout = { 500 }
+					transitionLeaveTimeout = { 300 }>
 				{ post }
+				</CSSTransitionGroup>
 			</div>
 		);
 	}

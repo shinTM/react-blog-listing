@@ -55,6 +55,7 @@ class TermFilterList extends Component {
 		}
 
 		this.props.onUpdatePostList( postList );
+
 	};
 
 	render() {
@@ -68,7 +69,8 @@ class TermFilterList extends Component {
 
 export default connect(
 	state    => ( {
-		postList: state.postList
+		postList: state.postList,
+		page: state.page,
 	} ),
 	dispatch => ( {
 		onUpdatePostList: ( postList ) => {

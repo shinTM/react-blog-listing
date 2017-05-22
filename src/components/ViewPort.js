@@ -11,7 +11,15 @@ import MoreButton from './MoreButton.js';
 
 import Settings from '../data/Settings';
 
-import { updatePostListAction, updateTermListAction, changePageAction, incrementPageAction, decrementPageAction, changeLayoutAction, addMorePostsAction } from '../actions';
+import {
+	updatePostListAction,
+	updateTermListAction,
+	changePageAction,
+	incrementPageAction,
+	decrementPageAction,
+	changeLayoutAction,
+	changePostPerPageAction
+} from '../actions';
 
 class ViewPort extends Component{
 
@@ -22,12 +30,24 @@ class ViewPort extends Component{
 				let responseData = JSON.parse( response );
 
 				WpData.allPosts = responseData;
+				console.log(responseData);
 				this.props.onUpdatePostList( responseData );
 			},
 			error => {
 				alert( `Rejected: ${error}` );
 			}
 		);
+
+		/*WpData.getPosts().then(
+			response => {
+				let responseData = JSON.parse( response );
+				console.log(responseData);
+				this.props.onUpdatePostList( responseData );
+			},
+			error => {
+				alert( `Rejected: ${error}` );
+			}
+		);*/
 
 		WpData.getAllCategory().then(
 			response => {
@@ -46,34 +66,28 @@ class ViewPort extends Component{
 		let viewMoreControl = <Pagination
 			postList = { this.props.postList }
 			page = { this.props.page }
+			postPerPage = { this.props.postPerPage }
 			onPageUpdate = { this.props.onPageUpdate }
 			onPageIncrease = { this.props.onPageIncrease }
 			onPageDecrease = { this.props.onPageDecrease }
 		/>;
 
 		if ( 'more-button' === Settings.defaultSettings.viewNextType ) {
-			viewMoreControl = <MoreButton onLoadMore = { this.props.onLoadMore }/>
+			viewMoreControl = <MoreButton onLoadMore = { this.props.onPostPerPageUpdate }/>
 		}
 
 		return viewMoreControl;
 	}
 
-	getPosts() {
-		WpData.getPosts().then(
-			response => {
-				let responseData = JSON.parse( response );
-				console.log(responseData);
-			},
-			error => {
-				alert( `Rejected: ${error}` );
-			}
-		);
+	test() {
+
+		//this.props.onUpdatePostList( {} );
 	}
 
 	render() {
 		return(
 			<div>
-			<button onClick={ ( event ) => { this.getPosts() } }>test</button>
+			<button onClick = { (event) =>  this.test() }>adas</button>
 				{/*<CSSTransitionGroup
 					transitionName = "example"
 					transitionAppear = { true }
@@ -89,9 +103,10 @@ class ViewPort extends Component{
 						onLayoutUpdate = { this.props.onLayoutUpdate }
 					/>
 				</div>
-				<PostList postList = { this.props.postList } page = { this.props.page } layout = { this.props.layout } />
+				<PostList postList = { this.props.postList } page = { this.props.page } postPerPage = { this.props.postPerPage } layout = { this.props.layout } />
 				<div className = "cherry-post-controls">
-					{this.getViewMoreControl()}
+						<MoreButton onLoadMore = { this.props.onPostPerPageUpdate }/>
+					{ this.getViewMoreControl() }
 				</div>
 			</div>
 		);
@@ -104,6 +119,7 @@ export default connect(
 		postList: state.postList,
 		termList: state.termList,
 		page: state.page,
+		postPerPage: state.postPerPage,
 		layout: state.layout
 	} ),
 	dispatch => ( {
@@ -125,8 +141,9 @@ export default connect(
 		onLayoutUpdate: ( layout ) => {
 			dispatch( changeLayoutAction( layout ) );
 		},
-		onLoadMore: () => {
-			dispatch( addMorePostsAction() );
-		}
+		onPostPerPageUpdate: () => {
+			let value = Settings.defaultSettings.viewMoreAmount;
+			dispatch( changePostPerPageAction( value ) );
+		},
 	} )
 )( ViewPort );

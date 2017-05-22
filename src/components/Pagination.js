@@ -5,7 +5,7 @@ import Settings from '../data/Settings';
 export default class Pagination extends Component{
 
 	render() {
-		let { postList, page, onPageUpdate, onPageIncrease, onPageDecrease } = this.props;
+		let { postList, page, postPerPage, onPageUpdate, onPageIncrease, onPageDecrease } = this.props;
 
 		if ( ! postList || ! postList.length ) {
 			return null;
@@ -19,14 +19,14 @@ export default class Pagination extends Component{
 			);
 		} );
 
-		pagItems.length = Math.ceil( pagItems.length / Settings.defaultSettings.postPerPage );
+		pagItems.length = Math.ceil( pagItems.length / postPerPage );
 
 		let prevButton = ( page > 1 ) ? <li className="prev-page" onClick = { ( event ) => onPageDecrease() }><span>Prev</span></li> : '';
 
 		let nextButton = ( page < pagItems.length ) ? <li className="next-page" onClick = { ( event ) => onPageIncrease() }><span>Next</span></li> : '';
 
 		return(
-			<ul className="cherry-post-controls__pagination">
+			<ul className = "cherry-post-controls__pagination">
 				{ prevButton }
 				{ pagItems }
 				{ nextButton }

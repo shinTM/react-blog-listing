@@ -11,8 +11,8 @@ export default class PostList extends Component {
 	}
 
 	render() {
-		let { postList, page, layout } = this.props,
-		postPerPage = Settings.defaultSettings.postPerPage;
+		let { postList, page, postPerPage, layout } = this.props;
+		//postPerPage = Settings.defaultSettings.postPerPage;
 
 		if ( ! postList || ! postList.length ) {
 			return(
@@ -35,7 +35,9 @@ export default class PostList extends Component {
 
 		return(
 			<div className = { postsListClasses }>
-				{ posts }
+
+					{ posts }
+
 			</div>
 		);
 	}

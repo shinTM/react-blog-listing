@@ -10,7 +10,8 @@ export default class Settings {
 			'columns_portrait_tablet': 2,
 			'columns_mobile':          1
 		},
-		viewNextType: 'pagination'
+		viewNextType: 'pagination',
+		viewMoreAmount: 4
 	}
 
 	static listingLayoutsSettings = [

@@ -8,6 +8,13 @@ export default class WpData {
 
 	static xhr = new XMLHttpRequest();
 
+	static defaultsQueryParams = {
+		page: 1,
+		postPerPage: Settings.defaultSettings.postPerPage,
+		categories: [],
+		tags: [],
+	};
+
 	static getAllPosts() {
 		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=100`;
 
@@ -21,17 +28,23 @@ export default class WpData {
 	}
 
 	static getPosts( queryParams = {} ) {
-		let defaultsQueryParams = {
-			page: 1,
-			postPerPage: Settings.defaultSettings.postPerPage,
-			categories: {}
-		}
+		this.xhr.abort();
 
-		let mergedQueryParams = Object.assign( defaultsQueryParams, queryParams );
+		let mergedQueryParams = Object.assign( WpData.defaultsQueryParams, queryParams );
 
-		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=${ mergedQueryParams.postPerPage }&page=${ mergedQueryParams.page }`;
+		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=${ mergedQueryParams.postPerPage }&page=${ mergedQueryParams.page }${ WpData.generateCategorySubUrl( mergedQueryParams.categories ) }`;
 
 		return this.httpGetRequest( url );
+	}
+
+	static generateCategorySubUrl( categories = [] ) {
+		let argument = '';
+
+		if ( 0 !== categories.length ) {
+			argument = `&categories=${ categories.join( ',' ) }`;
+		}
+
+		return argument;
 	}
 
 	static setTitleData( id, title ) {
