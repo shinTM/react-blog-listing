@@ -35,9 +35,7 @@ export default class PostList extends Component {
 
 		return(
 			<div className = { postsListClasses }>
-
-					{ posts }
-
+				{ posts }
 			</div>
 		);
 	}

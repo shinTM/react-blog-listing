@@ -1,27 +1,27 @@
 
-.example-enter {
+.post-item-enter {
 	opacity: 0.01;
 }
 
-.example-enter.example-enter-active {
+.post-item-enter.post-item-enter-active {
 	opacity: 1;
 	transition: opacity 500ms ease-in;
 }
 
-.example-leave {
+.post-item-leave {
 	opacity: 1;
 }
 
-.example-leave.example-leave-active {
+.post-item-leave.post-item-leave-active {
 	opacity: 0.01;
 	transition: opacity 300ms ease-in;
 }
 
-.example-appear {
+.post-item-appear {
 	opacity: 0.01;
 }
 
-.example-appear.example-appear-active {
+.post-item-appear.post-item-appear-active {
 	opacity: 1;
 	transition: opacity .5s ease-in;
 }

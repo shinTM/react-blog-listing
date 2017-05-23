@@ -16,7 +16,7 @@ export default class WpData {
 	};
 
 	static getAllPosts() {
-		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=100`;
+		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=${ Settings.defaultSettings.postAmount }`;
 
 		return this.httpGetRequest( url );
 	}

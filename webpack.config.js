@@ -25,16 +25,10 @@ module.exports = {
             },
 
             {
-                test:   /\.css$/,
-                loader: "style!css!autoprefixer?browsers=last 2 versions"
-            },
-
-            {
-                test: /\.js/,
-                loaders: ['babel'],
+                test: /\.js?/,
+                loaders: ['babel-loader'],
                 include: [
-                    path.join(__dirname, 'src'),
-                    path.join(__dirname, 'node_modules/react-icons')
+                    path.join(__dirname, 'src')
                 ]
             }
         ]

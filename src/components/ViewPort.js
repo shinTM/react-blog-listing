@@ -105,7 +105,6 @@ class ViewPort extends Component{
 				</div>
 				<PostList postList = { this.props.postList } page = { this.props.page } postPerPage = { this.props.postPerPage } layout = { this.props.layout } />
 				<div className = "cherry-post-controls">
-						<MoreButton onLoadMore = { this.props.onPostPerPageUpdate }/>
 					{ this.getViewMoreControl() }
 				</div>
 			</div>

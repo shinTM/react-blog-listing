@@ -1,6 +1,7 @@
 export default class Settings {
 
 	static defaultSettings = {
+		postAmount: 100,
 		listingLayout: 'grid',
 		postPerPage:   8,
 		columns: {
@@ -10,7 +11,7 @@ export default class Settings {
 			'columns_portrait_tablet': 2,
 			'columns_mobile':          1
 		},
-		viewNextType: 'pagination',
+		viewNextType: 'more-button',
 		viewMoreAmount: 4
 	}
 

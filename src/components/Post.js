@@ -39,7 +39,7 @@ class Post extends Component {
 		return(
 			<div className = { postClasses }>
 				<CSSTransitionGroup
-					transitionName = "example"
+					transitionName = "post-item"
 					transitionAppear = { true }
 					transitionEnter = { true }
 					transitionLeave = { true }
