@@ -11,12 +11,14 @@ class TermFilterList extends Component {
 	activeTermsList = [];
 
 	renderTermList() {
-		const { termList, onClick } = this.props;
+		const { isLoaded, termList, onClick } = this.props;
+
+		if ( ! isLoaded ) {
+			return false;
+		}
 
 		if ( ! termList || ! termList.length ) {
-			return(
-				<h4>Loading Term List...</h4>
-			)
+			return false;
 		}
 
 		return(

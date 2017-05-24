@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import FontAwesome from 'react-fontawesome';
+import { TweenMax, Power2 } from 'gsap';
 
 import PostTermList from './post-components/PostTermList.js';
 
@@ -11,9 +11,18 @@ import PostListType from './post-view/PostListType.js';
 
 import WpData from '../data/WpData';
 
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
-
 class Post extends Component {
+	componentWillAppear ( callback ) {
+		let container = this.container;
+		console.log(123);
+		TweenMax.fromTo( container, 1, { opacity: 0}, { opacity: 1, onComplete: callback});
+	}
+
+	componentWillLeave ( callback ) {
+		let container = this.container;
+
+		TweenMax.fromTo( container, 1, { opacity: 1}, { opacity: 0, onComplete: callback});
+	}
 
 	render() {
 		const { index, postData, layout, saveTitleHandler } = this.props;
@@ -37,17 +46,8 @@ class Post extends Component {
 		}
 
 		return(
-			<div className = { postClasses }>
-				<CSSTransitionGroup
-					transitionName = "post-item"
-					transitionAppear = { true }
-					transitionEnter = { true }
-					transitionLeave = { true }
-					transitionAppearTimeout = { 500 }
-					transitionEnterTimeout = { 500 }
-					transitionLeaveTimeout = { 300 }>
+			<div className = { postClasses } ref = { ( container ) => this.container = container }>
 				{ post }
-				</CSSTransitionGroup>
 			</div>
 		);
 	}

@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Post from './Post.js';
-import FontAwesome from 'react-fontawesome';
 import WpData from '../data/WpData';
 import Settings from '../data/Settings';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 export default class PostList extends Component {
 
@@ -11,13 +11,16 @@ export default class PostList extends Component {
 	}
 
 	render() {
-		let { postList, page, postPerPage, layout } = this.props;
-		//postPerPage = Settings.defaultSettings.postPerPage;
+		let { isLoaded, postList, page, postPerPage, layout } = this.props;
+
+		if ( ! isLoaded ) {
+			return false;
+		}
 
 		if ( ! postList || ! postList.length ) {
-			return(
-				<FontAwesome size = '2x' tag = 'i' spin name = 'spinner' />
-			)
+			return (
+				<h4>Post not found</h4>
+			);
 		}
 
 		let postsListClasses = `cherry-post-list cherry-post-list--${ layout }`;

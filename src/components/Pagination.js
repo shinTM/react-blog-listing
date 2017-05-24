@@ -5,10 +5,10 @@ import Settings from '../data/Settings';
 export default class Pagination extends Component{
 
 	render() {
-		let { postList, page, postPerPage, onPageUpdate, onPageIncrease, onPageDecrease } = this.props;
+		let { isLoaded, postList, page, postPerPage, onPageUpdate, onPageIncrease, onPageDecrease } = this.props;
 
-		if ( ! postList || ! postList.length ) {
-			return null;
+		if ( ! isLoaded ) {
+			return false;
 		}
 
 		const pagItems = postList.map( ( pagination, i ) => {

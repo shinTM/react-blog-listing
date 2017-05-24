@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+//import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 import WpData from '../data/WpData';
 import PostList from './PostList.js';
@@ -8,6 +9,7 @@ import TermFilterList from './TermFilterList.js';
 import LayoutTypeFilter from './LayoutTypeFilter.js';
 import Pagination from './Pagination.js';
 import MoreButton from './MoreButton.js';
+import Loader from './Loader.js';
 
 import Settings from '../data/Settings';
 
@@ -23,14 +25,23 @@ import {
 
 class ViewPort extends Component{
 
+	state = {
+		isLoaded: false,
+		loaderVisible: true,
+		loaderMessage: 'Loading...'
+	};
+
 	componentDidMount() {
 
-		WpData.getAllPosts().then(
+		let getAllPostPromise = WpData.getAllPosts().then(
 			response => {
 				let responseData = JSON.parse( response );
 
+				this.setState( {
+					loaderMessage: 'Loading... Post data loaded'
+				});
+
 				WpData.allPosts = responseData;
-				console.log(responseData);
 				this.props.onUpdatePostList( responseData );
 			},
 			error => {
@@ -38,20 +49,13 @@ class ViewPort extends Component{
 			}
 		);
 
-		/*WpData.getPosts().then(
+		let getAllCategoryPromise = WpData.getAllCategory().then(
 			response => {
 				let responseData = JSON.parse( response );
-				console.log(responseData);
-				this.props.onUpdatePostList( responseData );
-			},
-			error => {
-				alert( `Rejected: ${error}` );
-			}
-		);*/
 
-		WpData.getAllCategory().then(
-			response => {
-				let responseData = JSON.parse( response );
+				this.setState( {
+					loaderMessage: 'Loading... Category data loaded'
+				});
 
 				this.allCategories = responseData;
 				this.props.onUpdateTermList( responseData );
@@ -60,10 +64,66 @@ class ViewPort extends Component{
 				alert(`Rejected: ${error}`);
 			}
 		);
+
+		Promise.all( [ getAllPostPromise, getAllCategoryPromise ] ).then( () => {
+			this.setState( {
+				loaderMessage: 'Loaded'
+			});
+
+			setTimeout( () => {
+				this.setState( {
+					isLoaded: true,
+					loaderVisible: false,
+				});
+			}, 1000 );
+		} );
+	}
+
+	test() {
+	}
+
+	render() {
+		return(
+			<div>
+			<button onClick = { (event) =>  this.test() }>Test</button>
+				{/*<CSSTransitionGroup
+					transitionName = "example"
+					transitionAppear = { true }
+					transitionAppearTimeout = { 500 }
+					transitionEnterTimeout = { 500 }
+					transitionLeaveTimeout = { 300 }>
+				</CSSTransitionGroup>*/}
+				<TransitionGroup>
+					{ this.state.loaderVisible && <Loader message = { this.state.loaderMessage }/> }
+				</TransitionGroup>
+				<div className = "cherry-post-filters">
+					<TermFilterList
+						isLoaded = { this.state.isLoaded }
+						termList = { this.props.termList }
+					/>
+					<LayoutTypeFilter
+						isLoaded = { this.state.isLoaded }
+						layout = { this.props.layout }
+						onLayoutUpdate = { this.props.onLayoutUpdate }
+					/>
+				</div>
+				<PostList
+					isLoaded = { this.state.isLoaded }
+					postList = { this.props.postList }
+					page = { this.props.page }
+					postPerPage = { this.props.postPerPage }
+					layout = { this.props.layout }
+				/>
+				<div className = "cherry-post-controls">
+					{ this.getViewMoreControl() }
+				</div>
+			</div>
+		);
 	}
 
 	getViewMoreControl() {
 		let viewMoreControl = <Pagination
+			isLoaded = { this.state.isLoaded }
 			postList = { this.props.postList }
 			page = { this.props.page }
 			postPerPage = { this.props.postPerPage }
@@ -73,43 +133,17 @@ class ViewPort extends Component{
 		/>;
 
 		if ( 'more-button' === Settings.defaultSettings.viewNextType ) {
-			viewMoreControl = <MoreButton onLoadMore = { this.props.onPostPerPageUpdate }/>
+			return <MoreButton
+					isLoaded = { this.state.isLoaded }
+					postPerPage = { this.props.postPerPage }
+					onLoadMore = { this.props.onPostPerPageUpdate }
+				/>
 		}
 
 		return viewMoreControl;
 	}
 
-	test() {
 
-		//this.props.onUpdatePostList( {} );
-	}
-
-	render() {
-		return(
-			<div>
-			<button onClick = { (event) =>  this.test() }>adas</button>
-				{/*<CSSTransitionGroup
-					transitionName = "example"
-					transitionAppear = { true }
-					transitionAppearTimeout = { 500 }
-					transitionEnterTimeout = { 500 }
-					transitionLeaveTimeout = { 300 }>
-				</CSSTransitionGroup>*/}
-				<h2>Blog list</h2>
-				<div className = "cherry-post-filters">
-					<TermFilterList termList = { this.props.termList } />
-					<LayoutTypeFilter
-						layout = { this.props.layout }
-						onLayoutUpdate = { this.props.onLayoutUpdate }
-					/>
-				</div>
-				<PostList postList = { this.props.postList } page = { this.props.page } postPerPage = { this.props.postPerPage } layout = { this.props.layout } />
-				<div className = "cherry-post-controls">
-					{ this.getViewMoreControl() }
-				</div>
-			</div>
-		);
-	}
 }
 
 export default connect(
@@ -140,7 +174,7 @@ export default connect(
 		onLayoutUpdate: ( layout ) => {
 			dispatch( changeLayoutAction( layout ) );
 		},
-		onPostPerPageUpdate: () => {
+		onPostPerPageUpdate: ( ) => {
 			let value = Settings.defaultSettings.viewMoreAmount;
 			dispatch( changePostPerPageAction( value ) );
 		},

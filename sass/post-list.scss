@@ -7,6 +7,30 @@
 	}
 }
 
+.cherry-post-loader {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	width: 100%;
+	height: 30px;
+	top: 0;
+	left: 0;
+
+	i {
+		color: $accent_1;
+	}
+
+	&__inner {
+		display: flex;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+
+	&__message {
+		margin-left: 10px;
+	}
+}
+
 .cherry-post-filters {
 	margin-bottom: 20px;
 	display: flex;
@@ -129,7 +153,8 @@
 		.cherry-post {
 			position: relative;
 			margin-bottom: 50px;
-
+				perspective: 1000px;
+				perspective-origin: 50% 50%;
 			&:last-child {
 				margin-bottom: 0;
 			}

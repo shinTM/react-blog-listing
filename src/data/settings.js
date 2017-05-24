@@ -1,7 +1,7 @@
 export default class Settings {
 
 	static defaultSettings = {
-		postAmount: 100,
+		postAmount:    100,
 		listingLayout: 'grid',
 		postPerPage:   8,
 		columns: {

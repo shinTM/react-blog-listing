@@ -6,7 +6,11 @@ import Settings from '../data/Settings';
 export default class LayoutTypeFilter extends Component {
 
 	layoutsList() {
-		const { layout, onLayoutUpdate } = this.props;
+		const { isLoaded, layout, onLayoutUpdate } = this.props;
+
+		if ( ! isLoaded ) {
+			return false;
+		}
 
 		return (
 			<div className = "inner">
