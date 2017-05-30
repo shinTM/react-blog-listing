@@ -11,3 +11,5 @@ export const decrementPageAction = ( amount ) => ( { type: 'DECREMENT_PAGE', amo
 export const changeLayoutAction = ( layout ) => ( { type: 'UPDATE_LAYOUT', layout } );
 
 export const changePostPerPageAction = ( amount ) => ( { type: 'UPDATE_POST_PER_PAGE', amount } );
+
+export const tooglePostVisibleAction = ( ) => ( { type: 'TOOGLE_POST_VISIBLE' } );

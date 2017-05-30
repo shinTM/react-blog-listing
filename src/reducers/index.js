@@ -4,11 +4,13 @@ import termList from './termListReducer';
 import page from './pageReducer';
 import postPerPage from './postPerPageReducer';
 import layout from './layoutListingReducer';
+import postVisible from './postVisibleReducer';
 
 export default combineReducers({
 	postList,
 	termList,
 	page,
 	postPerPage,
-	layout
+	layout,
+	postVisible
 });

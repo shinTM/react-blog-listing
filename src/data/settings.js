@@ -3,7 +3,7 @@ export default class Settings {
 	static defaultSettings = {
 		postAmount:    100,
 		listingLayout: 'grid',
-		postPerPage:   8,
+		postPerPage:   4,
 		columns: {
 			'columns_desktop':         4,
 			'columns_laptop':          4,
@@ -11,7 +11,7 @@ export default class Settings {
 			'columns_portrait_tablet': 2,
 			'columns_mobile':          1
 		},
-		viewNextType: 'more-button',
+		viewNextType: 'pagination',
 		viewMoreAmount: 4
 	}
 
@@ -20,10 +20,10 @@ export default class Settings {
 			'name': 'grid',
 			'icon': 'th'
 		},
-		{
+		/*{
 			'name': 'columns',
 			'icon': 'columns'
-		},
+		},*/
 		{
 			'name': 'timeline',
 			'icon': 'calendar-o'

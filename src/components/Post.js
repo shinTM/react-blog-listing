@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { TweenMax, Power2 } from 'gsap';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 import PostTermList from './post-components/PostTermList.js';
 
@@ -12,27 +12,17 @@ import PostListType from './post-view/PostListType.js';
 import WpData from '../data/WpData';
 
 class Post extends Component {
-	componentWillAppear ( callback ) {
-		let container = this.container;
-		console.log(123);
-		TweenMax.fromTo( container, 1, { opacity: 0}, { opacity: 1, onComplete: callback});
-	}
-
-	componentWillLeave ( callback ) {
-		let container = this.container;
-
-		TweenMax.fromTo( container, 1, { opacity: 1}, { opacity: 0, onComplete: callback});
-	}
 
 	render() {
-		const { index, postData, layout, saveTitleHandler } = this.props;
+		const { isVisible, index, postData, layout, saveTitleHandler } = this.props;
+
 		let orderCountClass = index % 2 == 0 ? 'cherry-post--even' : 'cherry-post--odd';
 		let postClasses = `cherry-post ${ postData.format }-format ${ orderCountClass }`;
 		let post = null;
 
 		switch ( layout ) {
 			case 'grid':
-				post = <PostGridType postData = { postData } termList = { this.props.termList } />;
+				post = <PostGridType index = { index } postData = { postData } termList = { this.props.termList } />;
 				break;
 			case 'columns':
 				post = <PostColumnsType postData = { postData } termList = { this.props.termList } />;
@@ -46,9 +36,9 @@ class Post extends Component {
 		}
 
 		return(
-			<div className = { postClasses } ref = { ( container ) => this.container = container }>
-				{ post }
-			</div>
+			<TransitionGroup component = 'div' className = { postClasses }>
+				{ isVisible && post }
+			</TransitionGroup>
 		);
 	}
 }

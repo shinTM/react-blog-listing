@@ -57,7 +57,6 @@ class TermFilterList extends Component {
 		}
 
 		this.props.onUpdatePostList( postList );
-
 	};
 
 	render() {

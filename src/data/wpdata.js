@@ -8,6 +8,8 @@ export default class WpData {
 
 	static xhr = new XMLHttpRequest();
 
+	static tempDelay = 0;
+
 	static defaultsQueryParams = {
 		page: 1,
 		postPerPage: Settings.defaultSettings.postPerPage,

@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-//import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 import WpData from '../data/WpData';
@@ -10,6 +9,7 @@ import LayoutTypeFilter from './LayoutTypeFilter.js';
 import Pagination from './Pagination.js';
 import MoreButton from './MoreButton.js';
 import Loader from './Loader.js';
+import SortOrder from './SortOrder.js';
 
 import Settings from '../data/Settings';
 
@@ -20,7 +20,8 @@ import {
 	incrementPageAction,
 	decrementPageAction,
 	changeLayoutAction,
-	changePostPerPageAction
+	changePostPerPageAction,
+	tooglePostVisibleAction
 } from '../actions';
 
 class ViewPort extends Component{
@@ -79,20 +80,10 @@ class ViewPort extends Component{
 		} );
 	}
 
-	test() {
-	}
-
 	render() {
 		return(
 			<div>
 			<button onClick = { (event) =>  this.test() }>Test</button>
-				{/*<CSSTransitionGroup
-					transitionName = "example"
-					transitionAppear = { true }
-					transitionAppearTimeout = { 500 }
-					transitionEnterTimeout = { 500 }
-					transitionLeaveTimeout = { 300 }>
-				</CSSTransitionGroup>*/}
 				<TransitionGroup>
 					{ this.state.loaderVisible && <Loader message = { this.state.loaderMessage }/> }
 				</TransitionGroup>
@@ -100,6 +91,9 @@ class ViewPort extends Component{
 					<TermFilterList
 						isLoaded = { this.state.isLoaded }
 						termList = { this.props.termList }
+					/>
+					<SortOrder
+						isLoaded = { this.state.isLoaded }
 					/>
 					<LayoutTypeFilter
 						isLoaded = { this.state.isLoaded }
@@ -119,6 +113,10 @@ class ViewPort extends Component{
 				</div>
 			</div>
 		);
+	}
+
+	test() {
+		this.props.onPostVisibleUpdate();
 	}
 
 	getViewMoreControl() {
@@ -142,8 +140,6 @@ class ViewPort extends Component{
 
 		return viewMoreControl;
 	}
-
-
 }
 
 export default connect(
@@ -153,7 +149,8 @@ export default connect(
 		termList: state.termList,
 		page: state.page,
 		postPerPage: state.postPerPage,
-		layout: state.layout
+		layout: state.layout,
+		postVisible: state.postVisible
 	} ),
 	dispatch => ( {
 		onUpdatePostList: ( postList ) => {
@@ -163,20 +160,26 @@ export default connect(
 			dispatch( updateTermListAction( termList ) );
 		},
 		onPageUpdate: ( page ) => {
+			WpData.tempDelay = 0;
 			dispatch( changePageAction( page + 1 ) );
 		},
 		onPageIncrease: ( page ) => {
+			WpData.tempDelay = 0;
 			dispatch( incrementPageAction( 1 ) );
 		},
 		onPageDecrease: ( page ) => {
+			WpData.tempDelay = 0;
 			dispatch( decrementPageAction( 1 ) );
 		},
 		onLayoutUpdate: ( layout ) => {
 			dispatch( changeLayoutAction( layout ) );
 		},
-		onPostPerPageUpdate: ( ) => {
+		onPostPerPageUpdate: () => {
 			let value = Settings.defaultSettings.viewMoreAmount;
 			dispatch( changePostPerPageAction( value ) );
 		},
+		onPostVisibleUpdate: () => {
+			dispatch( tooglePostVisibleAction() );
+		}
 	} )
 )( ViewPort );
