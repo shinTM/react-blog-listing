@@ -21,6 +21,10 @@ export default class PostTermList extends Component {
 			);
 		} );
 
+		if ( 0 == postTermListRender.length ) {
+			return false;
+		}
+
 		return(
 			<ul className = "cherry-post__terms">
 				{ postTermListRender }

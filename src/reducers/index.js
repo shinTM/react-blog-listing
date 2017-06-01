@@ -4,7 +4,7 @@ import termList from './termListReducer';
 import page from './pageReducer';
 import postPerPage from './postPerPageReducer';
 import layout from './layoutListingReducer';
-import postVisible from './postVisibleReducer';
+import imageType from './featureImageTypeReducer';
 
 export default combineReducers({
 	postList,
@@ -12,5 +12,5 @@ export default combineReducers({
 	page,
 	postPerPage,
 	layout,
-	postVisible
+	imageType
 });

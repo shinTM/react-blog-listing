@@ -1,18 +1,23 @@
 export default class Settings {
+	static siteUrl = 'http://192.168.9.83/cherry5-develop/';
+	//static siteUrl = 'http://localhost:8888/cherry5-dev/';
 
 	static defaultSettings = {
 		postAmount:    100,
 		listingLayout: 'grid',
-		postPerPage:   4,
-		columns: {
-			'columns_desktop':         4,
-			'columns_laptop':          4,
-			'columns_album_tablet':    3,
-			'columns_portrait_tablet': 2,
-			'columns_mobile':          1
+		postPerPage:   6,
+		columns: 3,
+		responsiveColumns: {
+			'col-xl': 3,
+			'col-lg': 3,
+			'col-md': 3,
+			'col-sm': 2,
+			'col-xs': 1
 		},
-		viewNextType: 'pagination',
-		viewMoreAmount: 4
+		viewNextType: 'more-button', //pagination, more-button
+		viewMoreAmount: 3,
+		imageType: 'cover', //tag, cover
+		customizerMode: false
 	}
 
 	static listingLayoutsSettings = [
@@ -20,17 +25,17 @@ export default class Settings {
 			'name': 'grid',
 			'icon': 'th'
 		},
-		/*{
-			'name': 'columns',
-			'icon': 'columns'
-		},*/
-		{
-			'name': 'timeline',
-			'icon': 'calendar-o'
-		},
 		{
 			'name': 'list',
 			'icon': 'align-justify'
+		},
+		{
+			'name': 'columns',
+			'icon': 'columns'
+		},
+		{
+			'name': 'timeline',
+			'icon': 'calendar-o'
 		}
 	]
 }

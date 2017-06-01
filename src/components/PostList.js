@@ -6,7 +6,7 @@ import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 export default class PostList extends Component {
 	render() {
-		let { isLoaded, postList, page, postPerPage, layout } = this.props;
+		let { isLoaded, postList, page, postPerPage, layout, column } = this.props;
 
 		if ( ! isLoaded ) {
 			return false;
@@ -36,7 +36,6 @@ export default class PostList extends Component {
 				key = { index }
 				index = { index }
 				postData = { post }
-				layout = { layout }
 				saveTitleHandler = { this.saveTitleHandler }
 			/>
 		));

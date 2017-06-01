@@ -1,19 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import FontAwesome from 'react-fontawesome';
+import PostTitle from '../post-components/PostTitle.js';
 import PostTermList from '../post-components/PostTermList.js';
+import FeatureImage from '../post-components/FeatureImage.js';
 
 export default class PostColumnsType extends Component {
 
 	render() {
-		const { postData } = this.props;
+		const { index, postData, termList, imageType } = this.props;
 
 		return(
-			<div className="inner-wrapper">
-				<h3 className = "cherry-post__title" onBlur = { ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>
+			<div className="inner-wrapper" ref = { ( container ) => this.container = container }>
+				{/*<h3 className = "cherry-post__title" onBlur = { ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>*/}
+				<PostTitle title = { postData.title.rendered } link = { postData.link } />
 				<div className = "cherry-post__media">
-					<figure className = "cherry-post__thumbnail">
-						<img alt = { postData.title.rendered } src = { postData.featured_image_src }/>
-					</figure>
+					<FeatureImage
+						type = { imageType }
+						src = { postData.featured_image_src }
+						alt = { postData.title.rendered }
+					/>
 				</div>
 				<div className = "cherry-post__content">
 					<div className = "cherry-post__meta-info">

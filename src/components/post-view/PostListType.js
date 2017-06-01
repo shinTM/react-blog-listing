@@ -1,20 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import FontAwesome from 'react-fontawesome';
+import PostTitle from '../post-components/PostTitle.js';
 import PostTermList from '../post-components/PostTermList.js';
+import FeatureImage from '../post-components/FeatureImage.js';
 
 export default class PostListType extends Component {
 
 	render() {
-		const { postData } = this.props;
+		const { index, postData, termList, imageType } = this.props;
 
 		return(
-			<div className="inner-wrapper">
+			<div className = "inner-wrapper">
 				<div className = "cherry-post__media">
-					<figure className = "cherry-post__thumbnail">
-						<img alt = { postData.title.rendered } src = { postData.featured_image_src }/>
-					</figure>
+					<FeatureImage
+						type = { imageType }
+						src = { postData.featured_image_src }
+						alt = { postData.title.rendered }
+					/>
 				</div>
 				<div className = "cherry-post__content">
+					<PostTermList termList = { this.props.termList } postTerms = { postData.categories } />
+					<PostTitle title = { postData.title.rendered } link = { postData.link } />
+					<p className = "cherry-post__trimed-content" dangerouslySetInnerHTML = {{ __html: postData.trimed_content }}></p>
 					<div className = "cherry-post__meta-info">
 						<span className = "post-meta-item post-meta-item--author">
 							<FontAwesome tag = 'i' name = 'user' /> <a href = { postData.author_data.author_link }>{ postData.author_data.display_name }</a>
@@ -24,10 +31,6 @@ export default class PostListType extends Component {
 							{ postData.custom_format_date }
 						</span>
 					</div>
-					<PostTermList termList = { this.props.termList } postTerms = { postData.categories } />
-					<h3 className = "cherry-post__title" onBlur = { ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>
-					<p className = "cherry-post__trimed-content" dangerouslySetInnerHTML = {{ __html: postData.trimed_content }}></p>
-					<a className = "cherry-post__permalink" href = { postData.link }>More</a>
 				</div>
 			</div>
 		);

@@ -1,10 +1,5 @@
-#cherry-post-listing{
-	padding: 30px 0;
+#cherry-post-listing{;
 	position: relative;
-
-	h2 {
-		padding-right: 50px;
-	}
 }
 
 .cherry-post-loader {
@@ -51,24 +46,22 @@
 					span {
 						padding: 5px 10px;
 						display: block;
-						box-shadow: inset 0 0 0 1px $border_color;
 						cursor: pointer;
 						text-align: center;
 						@include transition( all .3s ease );
 
 						i {
-							margin-left: 5px;
+							margin-right: 5px;
 						}
 
 						&:not( .active ):hover {
 							color: $accent_1;
-							background-color: $accent_3;
 						}
 
 						&.active {
-							color: $accent_3;
-							background-color: $accent_1;
-							box-shadow: none;
+							i {
+								color: $accent_1;
+							}
 						}
 					}
 				}
@@ -83,7 +76,6 @@
 
 		.layout-type-item {
 			padding: 5px 7px;
-			box-shadow: inset 0 0 0 1px $border_color;
 			cursor: pointer;
 			margin-left: 2px;
 			@include transition( all .3s ease );
@@ -94,19 +86,20 @@
 			}
 
 			&.active {
-				color: $accent_3;
-				background-color: $accent_1;
-				box-shadow: none;
+				color: $accent_1;
 			}
 		}
 	}
 
 	&__sort-order {
 		padding: 5px 7px;
-		box-shadow: inset 0 0 0 1px $border_color;
 		cursor: pointer;
 		margin-left: 2px;
 		@include transition( all .3s ease );
+
+		i {
+			color: $accent_1;
+		}
 
 		span {
 			margin-right: 5px;
@@ -116,28 +109,35 @@
 
 .cherry-post-list {
 	margin-bottom: 30px;
-	perspective: 1000px;
-	transform-style: preserve-3d;
+	perspective: 500px;
 
 	&--grid {
 		display: flex;
-		justify-content: justify-content;
-		align-items: flex-start;
-		flex-flow: row wrap;
-		margin-left: -10px;
-		margin-right: -10px;
+		flex-wrap: wrap;
+		margin-left: -0.9375rem;
+		margin-right: -0.9375rem;
 
 		.cherry-post {
-			width: 25%;
+			position: relative;
+			box-sizing: border-box;
+			display: flex;
+			align-items: stretch;
 
 			.inner-wrapper {
-				margin: 0 10px 30px 10px;
+				min-width: 100%;
+				margin-bottom: 1.875rem;
+				background-color: #fff;
+				box-shadow: 14px 14px 17px 0px rgba( 21, 21, 30, 0.19 );
+			}
+
+			&__terms {
+				margin-top: -10px;
 			}
 		}
 	}
 
 	&--columns {
-		column-count: 4;
+		column-count: 3;
 		column-gap: 20px;
 
 		.cherry-post {
@@ -154,11 +154,11 @@
 		padding: 30px 0;
 
 		&:before {
-			width: 1px;
+			width: 2px;
 			height: 100%;
 			display: block;
 			position: absolute;
-			background-color: $border_color;
+			background-color: $accent_1;
 			top: 0;
 			left: 50%;
 			content: "";
@@ -166,61 +166,72 @@
 
 		.cherry-post {
 			position: relative;
-			margin-bottom: 50px;
-				perspective: 1000px;
-				perspective-origin: 50% 50%;
+			display: flex;
+
+			&:before {
+				position: absolute;
+				display: block;
+				width: 10px;
+				height: 10px;
+				top: 0px;
+				left: 50%;
+				margin-left: -4px;
+				border-radius: 50%;
+				background-color: $accent_1;
+				box-shadow: 0 0 0 6px lighten( $accent_1, 30% );
+				content: '';
+			}
+
+			&:empty {
+				&:before {
+					content: none;
+				}
+			}
+
 			&:last-child {
 				margin-bottom: 0;
 			}
 
 			.inner-wrapper {
-				display: flex;
-				justify-content: space-between;
-				align-content: flex-start;
-				align-items: flex-start;
+				width: calc( 50% - 20px );
+				background-color: #fff;
+				box-shadow: 14px 14px 17px 0px rgba( 21, 21, 30, 0.19 );
 			}
 
-			&__meta-info {
-				width: 48%;
-				margin: 0;
-				border: none;
+			&__meta-date {
+				padding: 10px 15px;
 			}
 
-			&__content {
-				width: 48%;
+			&__terms {
+				margin-top: -10px;
 			}
 
 			&--even {
-				.cherry-post__meta-info {
-					text-align: right;
-				}
-			}
+				justify-content: flex-start;
 
-			&--odd {
-				.cherry-post__meta-info {
-					order: 2;
-				}
-				.cherry-post__content {
+				.cherry-post__meta-date {
 					text-align: right;
 				}
-				.cherry-post__terms {
+
+				.cherry-post__title,
+				.cherry-post__trimed-content {
+					text-align: right;
+				}
+
+				.cherry-post__meta-info {
 					justify-content: flex-end;
 				}
 			}
 
-			&:before {
-				position: absolute;
-				display: block;
-				width: 20px;
-				height: 20px;
-				top: 3px;
-				left: 50%;
-				margin-left: -9px;
-				border-radius: 50%;
-				background-color: $white;
-				box-shadow: inset 0 0 0 4px $accent_1;
-				content: "";
+			&--odd {
+				justify-content: flex-end;
+
+				.cherry-post__title,
+				.cherry-post__trimed-content {
+					text-align: left;
+				}
 			}
+
 		}
 	}
 
@@ -228,38 +239,31 @@
 		.cherry-post {
 			.inner-wrapper {
 				display: flex;
-				margin-bottom: 40px;
-				padding-bottom: 30px;
-				border-bottom: 1px dotted $border_color;
+				margin-bottom: 1.875rem;
+				background-color: #fff;
+				box-shadow: 14px 14px 17px 0px rgba( 21, 21, 30, 0.19 );
 			}
 
 			&:last-child {
 				.inner-wrapper {
 					margin-bottom: 0;
-					padding-bottom: 0;
-					border-bottom: none;
 				}
 			}
+
 			&__thumbnail {
+				min-width: 360px;
 				img {
 					min-width: 100%;
 				}
 			}
-			&__media {
-				max-width: 300px;
-				margin: 0 30px 0 0;
-			}
-			&__content {
 
+			&__title {
+				text-align: left;
 			}
-			&--even {
 
-			}
-			&--odd {
-				.cherry-post__media {
-					order: 2;
-					margin: 0 0 0 30px;
-				}
+			&__terms {
+				justify-content: flex-start;
+				margin: 0 0 30px 0;
 			}
 		}
 	}
@@ -324,19 +328,26 @@
 .cherry-post {
 
 	&__thumbnail {
-		margin-bottom: 1em;
+		line-height: 0;
+
+		&--cover-type {
+			width: 100%;
+			min-height: 270px;
+			background-size: cover;
+			background-position: center center;
+		}
 	}
 
 	&__title {
+		text-align: center;
 		margin-bottom: 1em;
 	}
 
 	&__terms {
 		@include reset-list;
-		margin-bottom: 1em;
 		display: flex;
 		flex-flow: row wrap;
-		justify-content: flex-start;
+		justify-content: center;
 
 		li {
 			flex: 0 1 auto;
@@ -359,15 +370,12 @@
 	}
 
 	&__content {
-		margin-bottom: 1em;
+		padding: 30px;
 	}
 
 	&__meta-info {
-		border-top: 1px solid $border_color;
-		border-bottom: 1px solid $border_color;
+		display: flex;
 		padding: 5px;
-		margin-bottom: 1em;
-
 		.post-meta-item {
 			margin-right: 5px;
 
@@ -377,6 +385,19 @@
 
 			&:last-child {
 				margin-right: 0;
+			}
+
+			&--author {
+				flex: 0 1 auto;
+			}
+
+			&--date {
+				flex: 0 1 auto;
+			}
+
+			&--comments {
+				flex: 1 1 auto;
+				text-align: right;
 			}
 		}
 	}

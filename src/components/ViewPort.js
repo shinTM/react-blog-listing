@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
+import $ from 'jquery';
 
 import WpData from '../data/WpData';
+import Settings from '../data/Settings';
+
 import PostList from './PostList.js';
 import TermFilterList from './TermFilterList.js';
 import LayoutTypeFilter from './LayoutTypeFilter.js';
@@ -10,8 +13,6 @@ import Pagination from './Pagination.js';
 import MoreButton from './MoreButton.js';
 import Loader from './Loader.js';
 import SortOrder from './SortOrder.js';
-
-import Settings from '../data/Settings';
 
 import {
 	updatePostListAction,
@@ -21,7 +22,7 @@ import {
 	decrementPageAction,
 	changeLayoutAction,
 	changePostPerPageAction,
-	tooglePostVisibleAction
+	changeFeatureImageAction
 } from '../actions';
 
 class ViewPort extends Component{
@@ -66,6 +67,7 @@ class ViewPort extends Component{
 			}
 		);
 
+
 		Promise.all( [ getAllPostPromise, getAllCategoryPromise ] ).then( () => {
 			this.setState( {
 				loaderMessage: 'Loaded'
@@ -78,12 +80,12 @@ class ViewPort extends Component{
 				});
 			}, 1000 );
 		} );
+
 	}
 
 	render() {
 		return(
 			<div>
-			<button onClick = { (event) =>  this.test() }>Test</button>
 				<TransitionGroup>
 					{ this.state.loaderVisible && <Loader message = { this.state.loaderMessage }/> }
 				</TransitionGroup>
@@ -107,16 +109,13 @@ class ViewPort extends Component{
 					page = { this.props.page }
 					postPerPage = { this.props.postPerPage }
 					layout = { this.props.layout }
+					column = { this.props.postListColumn }
 				/>
 				<div className = "cherry-post-controls">
 					{ this.getViewMoreControl() }
 				</div>
 			</div>
 		);
-	}
-
-	test() {
-		this.props.onPostVisibleUpdate();
 	}
 
 	getViewMoreControl() {
@@ -150,7 +149,7 @@ export default connect(
 		page: state.page,
 		postPerPage: state.postPerPage,
 		layout: state.layout,
-		postVisible: state.postVisible
+		postListColumn: state.postListColumn
 	} ),
 	dispatch => ( {
 		onUpdatePostList: ( postList ) => {
@@ -172,14 +171,27 @@ export default connect(
 			dispatch( decrementPageAction( 1 ) );
 		},
 		onLayoutUpdate: ( layout ) => {
+			let imageType = 'tag';
+
+			switch ( layout ) {
+				case 'grid':
+				case 'list':
+					imageType = 'cover';
+					break;
+				case 'columns':
+				case 'timeline':
+					imageType = 'tag';
+					break;
+			}
+
+			dispatch( changeFeatureImageAction( imageType ) );
 			dispatch( changeLayoutAction( layout ) );
 		},
 		onPostPerPageUpdate: () => {
 			let value = Settings.defaultSettings.viewMoreAmount;
+			WpData.tempDelay = 0;
+
 			dispatch( changePostPerPageAction( value ) );
-		},
-		onPostVisibleUpdate: () => {
-			dispatch( tooglePostVisibleAction() );
 		}
 	} )
 )( ViewPort );

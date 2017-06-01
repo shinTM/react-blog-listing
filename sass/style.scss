@@ -2,6 +2,7 @@
 @import "mixins";
 @import "post-list";
 @import "animations";
+@import "grid/grid";
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700,500italic,500,400italic,300italic,300,100italic,100);
 
@@ -9,7 +10,7 @@ body{
 	font:14px $font-family-base;
 	letter-spacing:.1px;
 	color: $text_color;
-	background: $white;
+	background: #f4f6f7;
 	margin:0;
 }
 
@@ -28,8 +29,7 @@ a:focus{
 
 h2{
 	margin:0 0 60px;
-	font-size:42px;
-	font-weight:500;
+	font-size: 26px;
 }
 
 h2, h3, h4, h5 {

@@ -2,41 +2,47 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 
-import PostTermList from './post-components/PostTermList.js';
-
 import PostGridType from './post-view/PostGridType.js';
 import PostColumnsType from './post-view/PostColumnsType.js';
 import PostTimelineType from './post-view/PostTimelineType.js';
 import PostListType from './post-view/PostListType.js';
 
-import WpData from '../data/WpData';
+import Settings from '../data/Settings';
+import Tools from '../tools/Tools';
 
 class Post extends Component {
 
 	render() {
-		const { isVisible, index, postData, layout, saveTitleHandler } = this.props;
+		const { isVisible, index, postData, saveTitleHandler } = this.props;
 
 		let orderCountClass = index % 2 == 0 ? 'cherry-post--even' : 'cherry-post--odd';
-		let postClasses = `cherry-post ${ postData.format }-format ${ orderCountClass }`;
+		let postClasses = [
+			'cherry-post',
+			`${ postData.format }-format`,
+			`${ orderCountClass }`
+		];
 		let post = null;
 
-		switch ( layout ) {
+		switch ( this.props.layout ) {
 			case 'grid':
-				post = <PostGridType index = { index } postData = { postData } termList = { this.props.termList } />;
+				let ItemColumnClasses = Tools.generateGridItemColumnClasses();
+
+				post = <PostGridType index = { index } postData = { postData } termList = { this.props.termList } imageType = { this.props.imageType } />;
+				postClasses = [ ...postClasses, ...ItemColumnClasses ];
 				break;
 			case 'columns':
-				post = <PostColumnsType postData = { postData } termList = { this.props.termList } />;
+				post = <PostColumnsType postData = { postData } termList = { this.props.termList } imageType = { this.props.imageType } />;
 				break;
 			case 'timeline':
-				post = <PostTimelineType postData = { postData } termList = { this.props.termList } />;
+				post = <PostTimelineType postData = { postData } termList = { this.props.termList } imageType = { this.props.imageType } />;
 				break;
 			default :
-				post = <PostListType postData = { postData } termList = { this.props.termList } />;
+				post = <PostListType postData = { postData } termList = { this.props.termList } imageType = { this.props.imageType } />;
 				break;
 		}
 
 		return(
-			<TransitionGroup component = 'div' className = { postClasses }>
+			<TransitionGroup component = 'div' className = { postClasses.join( ' ' ) }>
 				{ isVisible && post }
 			</TransitionGroup>
 		);
@@ -45,6 +51,9 @@ class Post extends Component {
 
 export default connect(
 	state => ( {
-		termList: state.termList
-	} ),
+		termList: state.termList,
+		postListColumn: state.postListColumn,
+		layout: state.layout,
+		imageType: state.imageType
+	} )
 )( Post );

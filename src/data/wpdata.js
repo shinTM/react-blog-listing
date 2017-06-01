@@ -1,8 +1,6 @@
 import Settings from '../data/Settings';
 
 export default class WpData {
-	//static siteUrl = 'http://localhost:8888/cherry5-dev/';
-	static siteUrl = 'http://192.168.9.83/cherry5-develop/';
 
 	static allPosts = [];
 
@@ -18,13 +16,13 @@ export default class WpData {
 	};
 
 	static getAllPosts() {
-		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=${ Settings.defaultSettings.postAmount }`;
+		let url = `${ Settings.siteUrl }/wp-json/wp/v2/posts?per_page=${ Settings.defaultSettings.postAmount }`;
 
 		return this.httpGetRequest( url );
 	}
 
 	static getAllCategory() {
-		let url = `${ WpData.siteUrl }/wp-json/wp/v2/categories`;
+		let url = `${ Settings.siteUrl }/wp-json/wp/v2/categories`;
 
 		return this.httpGetRequest( url );
 	}
@@ -34,7 +32,7 @@ export default class WpData {
 
 		let mergedQueryParams = Object.assign( WpData.defaultsQueryParams, queryParams );
 
-		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts?per_page=${ mergedQueryParams.postPerPage }&page=${ mergedQueryParams.page }${ WpData.generateCategorySubUrl( mergedQueryParams.categories ) }`;
+		let url = `${ Settings.siteUrl }/wp-json/wp/v2/posts?per_page=${ mergedQueryParams.postPerPage }&page=${ mergedQueryParams.page }${ WpData.generateCategorySubUrl( mergedQueryParams.categories ) }`;
 
 		return this.httpGetRequest( url );
 	}
@@ -50,7 +48,7 @@ export default class WpData {
 	}
 
 	static setTitleData( id, title ) {
-		let url = `${ WpData.siteUrl }/wp-json/wp/v2/posts/${ id }?title=${ title }`;
+		let url = `${ Settings.siteUrl }/wp-json/wp/v2/posts/${ id }?title=${ title }`;
 
 		this.httpPostRequest( url );
 	}
@@ -138,6 +136,5 @@ export default class WpData {
 
 		return enc;
 	}
-
 
 }

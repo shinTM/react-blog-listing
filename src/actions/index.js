@@ -12,4 +12,4 @@ export const changeLayoutAction = ( layout ) => ( { type: 'UPDATE_LAYOUT', layou
 
 export const changePostPerPageAction = ( amount ) => ( { type: 'UPDATE_POST_PER_PAGE', amount } );
 
-export const tooglePostVisibleAction = ( ) => ( { type: 'TOOGLE_POST_VISIBLE' } );
+export const changeFeatureImageAction = ( imageType ) => ( { type: 'UPDATE_FEATURE_IMAGE_TYPE', imageType } );
