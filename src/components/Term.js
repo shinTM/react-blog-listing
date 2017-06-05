@@ -16,7 +16,7 @@ export default class Term extends Component{
 
 	render() {
 		return(
-			<span className = { this.state.isActive ? 'active' : null } onClick={ this.onTermClick }>
+			<span className = { this.state.isActive ? 'active' : null } onClick = { this.onTermClick }>
 				<FontAwesome tag = 'i' name = { this.state.isActive ? 'check-circle-o' : 'circle-o' } />
 				{ this.props.termName }
 			</span>

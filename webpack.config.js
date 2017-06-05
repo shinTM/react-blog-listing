@@ -28,7 +28,8 @@ module.exports = {
                 test: /\.js?/,
                 loaders: ['babel-loader'],
                 include: [
-                    path.join(__dirname, 'src')
+                    path.join(__dirname, 'src'),
+                    path.join(__dirname, 'node_modules/react-icons')
                 ]
             }
         ]

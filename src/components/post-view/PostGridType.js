@@ -51,7 +51,7 @@ export default class PostGridType extends Component {
 					<PostTermList termList = { this.props.termList } postTerms = { postData.categories } />
 				</div>
 				<div className = "cherry-post__content">
-					<PostTitle title = { postData.title.rendered } link = { postData.link } />
+					<PostTitle id = { postData.id } title = { postData.title.rendered } link = { postData.link } />
 					<div className = "cherry-post__meta-info">
 						<span className = "post-meta-item post-meta-item--author">
 							<a href = { postData.author_data.author_link }>{ postData.author_data.display_name }</a>

@@ -57,7 +57,7 @@ export default class WpData {
 		WpData.xhr = new XMLHttpRequest();
 		WpData.xhr.open( 'POST', url, true );
 
-		let authorizationData = this.base64_encode( 'admin:1' );
+		let authorizationData = this.base64_encode( `${ Settings.defaultSettings.authorizationData.login }:${ Settings.defaultSettings.authorizationData.pass }` );
 
 		WpData.xhr.setRequestHeader( 'Authorization', 'Basic ' + authorizationData );
 

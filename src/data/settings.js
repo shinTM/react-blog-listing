@@ -17,7 +17,11 @@ export default class Settings {
 		viewNextType: 'more-button', //pagination, more-button
 		viewMoreAmount: 3,
 		imageType: 'cover', //tag, cover
-		customizerMode: false
+		customizerMode: true,
+		authorizationData: {
+			login: 'admin',
+			pass: '1'
+		}
 	}
 
 	static listingLayoutsSettings = [

@@ -12,15 +12,16 @@ export default class PostColumnsType extends Component {
 		return(
 			<div className="inner-wrapper" ref = { ( container ) => this.container = container }>
 				{/*<h3 className = "cherry-post__title" onBlur = { ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>*/}
-				<PostTitle title = { postData.title.rendered } link = { postData.link } />
 				<div className = "cherry-post__media">
 					<FeatureImage
 						type = { imageType }
 						src = { postData.featured_image_src }
 						alt = { postData.title.rendered }
 					/>
+					<PostTermList termList = { this.props.termList } postTerms = { postData.categories } />
 				</div>
 				<div className = "cherry-post__content">
+					<PostTitle title = { postData.title.rendered } link = { postData.link } />
 					<div className = "cherry-post__meta-info">
 						<span className = "post-meta-item post-meta-item--author">
 							<FontAwesome tag = 'i' name = 'user' /> <a href = { postData.author_data.author_link }>{ postData.author_data.display_name }</a>
@@ -30,9 +31,6 @@ export default class PostColumnsType extends Component {
 							{ postData.custom_format_date }
 						</span>
 					</div>
-					<PostTermList termList = { this.props.termList } postTerms = { postData.categories } />
-					<p className = "cherry-post__trimed-content" dangerouslySetInnerHTML = {{ __html: postData.trimed_content }}></p>
-					<a className = "cherry-post__permalink" href = { postData.link }>More</a>
 				</div>
 			</div>
 		);

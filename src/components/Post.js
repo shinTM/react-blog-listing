@@ -13,7 +13,7 @@ import Tools from '../tools/Tools';
 class Post extends Component {
 
 	render() {
-		const { isVisible, index, postData, saveTitleHandler } = this.props;
+		const { isVisible, index, postData } = this.props;
 
 		let orderCountClass = index % 2 == 0 ? 'cherry-post--even' : 'cherry-post--odd';
 		let postClasses = [
@@ -21,6 +21,7 @@ class Post extends Component {
 			`${ postData.format }-format`,
 			`${ orderCountClass }`
 		];
+
 		let post = null;
 
 		switch ( this.props.layout ) {

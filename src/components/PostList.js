@@ -36,20 +36,19 @@ export default class PostList extends Component {
 				key = { index }
 				index = { index }
 				postData = { post }
-				saveTitleHandler = { this.saveTitleHandler }
 			/>
 		));
 
-		let postsListClasses = `cherry-post-list cherry-post-list--${ layout }`;
+		let postsListClasses = [ 'cherry-post-list', `cherry-post-list--${ layout }` ];
+
+		if ( Settings.defaultSettings.customizerMode ) {
+			postsListClasses.push( 'customizer-mode' );
+		}
 
 		return(
-			<div className = { postsListClasses }>
+			<div className = { postsListClasses.join( ' ' ) }>
 				{ posts }
 			</div>
 		);
-	}
-
-	saveTitleHandler = ( id, event ) => {
-		WpData.setTitleData( id, event.target.innerText );
 	}
 }
