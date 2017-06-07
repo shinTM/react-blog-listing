@@ -4,7 +4,9 @@ export default class WpData {
 
 	static allPosts = [];
 
-	static xhr = new XMLHttpRequest();
+	static getXHR = null;
+
+	static postXHR = null;
 
 	static tempDelay = 0;
 
@@ -28,7 +30,7 @@ export default class WpData {
 	}
 
 	static getPosts( queryParams = {} ) {
-		this.xhr.abort();
+		this.getXHR.abort();
 
 		let mergedQueryParams = Object.assign( WpData.defaultsQueryParams, queryParams );
 
@@ -53,15 +55,21 @@ export default class WpData {
 		this.httpPostRequest( url );
 	}
 
+	static setPostExceptData( id, excerpt ) {
+		let url = `${ Settings.siteUrl }/wp-json/wp/v2/posts/${ id }?excerpt=${ excerpt }`;
+
+		this.httpPostRequest( url );
+	}
+
 	static httpPostRequest( url ) {
-		WpData.xhr = new XMLHttpRequest();
-		WpData.xhr.open( 'POST', url, true );
+		WpData.postXHR = new XMLHttpRequest();
+		WpData.postXHR.open( 'POST', url, true );
 
 		let authorizationData = this.base64_encode( `${ Settings.defaultSettings.authorizationData.login }:${ Settings.defaultSettings.authorizationData.pass }` );
 
-		WpData.xhr.setRequestHeader( 'Authorization', 'Basic ' + authorizationData );
+		WpData.postXHR.setRequestHeader( 'Authorization', 'Basic ' + authorizationData );
 
-		WpData.xhr.onload = function() {
+		WpData.postXHR.onload = function() {
 			if (this.status == 200) {
 				console.log('updated');
 			} else {
@@ -71,23 +79,25 @@ export default class WpData {
 			}
 		};
 
-		WpData.xhr.onerror = function() {
+		WpData.postXHR.onerror = function() {
 			new Error( 'Network Error' )
 		};
 
-		WpData.xhr.send();
+		WpData.postXHR.send();
 	}
 
 	static httpGetRequest( url ) {
 
 		return new Promise( function( resolve, reject ) {
 
-			WpData.xhr = new XMLHttpRequest();
-			WpData.xhr.open( 'GET', url, true );
+			WpData.getXHR = new XMLHttpRequest();
+			WpData.getXHR.open( 'GET', url, true );
 
-			WpData.xhr.onload = function() {
+			WpData.getXHR.onload = function() {
 				if (this.status == 200) {
 					resolve(this.response);
+
+
 				} else {
 					var error = new Error(this.statusText);
 
@@ -96,11 +106,11 @@ export default class WpData {
 				}
 			};
 
-			WpData.xhr.onerror = function() {
+			WpData.getXHR.onerror = function() {
 				reject( new Error( 'Network Error' ) );
 			};
 
-			WpData.xhr.send();
+			WpData.getXHR.send();
 		} );
 
 	}

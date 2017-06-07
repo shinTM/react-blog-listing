@@ -14,8 +14,6 @@ import MoreButton from './MoreButton.js';
 import Loader from './Loader.js';
 import SortOrder from './SortOrder.js';
 
-import TinyMCE from 'react-tinymce';
-
 import {
 	updatePostListAction,
 	updateTermListAction,
@@ -46,6 +44,9 @@ class ViewPort extends Component{
 				});
 
 				WpData.allPosts = responseData;
+
+				console.log(WpData.allPosts);
+
 				this.props.onUpdatePostList( responseData );
 			},
 			error => {
@@ -88,15 +89,6 @@ class ViewPort extends Component{
 	render() {
 		return(
 			<div>
-				{/*<TinyMCE
-					content="<p>This is the initial content of the editor</p>"
-					config={{
-						plugins: 'link image code imagetools',
-						toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code image',
-						imagetools_proxy: 'proxy.php'
-					}}
-					onChange={this.handleEditorChange}
-				/>*/}
 				<TransitionGroup>
 					{ this.state.loaderVisible && <Loader message = { this.state.loaderMessage }/> }
 				</TransitionGroup>

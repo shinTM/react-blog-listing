@@ -24,6 +24,7 @@ export default class PostTitle extends Component {
 		if ( ! this.state.customizerMode ) {
 			$title.focus();
 		} else {
+			$title.blur();
 			WpData.setTitleData( id, titleContent );
 		}
 	}
@@ -36,7 +37,7 @@ export default class PostTitle extends Component {
 			titleContent = <a href = { link }>{ title }</a>
 		} else {
 			titleContent = <div>
-				{ this.state.customizerMode ? <span className = "title" tabIndex = "0" contentEditable>{ title }</span> : <span className = "title">{ title }</span> }
+				{ this.state.customizerMode ? <span className = "title" tabIndex = "0" contentEditable>{ title }</span> : <span className = "title" tabIndex = "0">{ title }</span> }
 				<span className = "edit-button" onClick = { ( event ) => this.onEditClick( id, event ) } >
 					{ ! this.state.customizerMode ? <MdEdit size = { 18 }/> : <MdSave size = { 18 }/> }
 				</span>
