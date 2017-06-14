@@ -3,6 +3,7 @@ import FontAwesome from 'react-fontawesome';
 import PostTitle from '../post-components/PostTitle.js';
 import PostTermList from '../post-components/PostTermList.js';
 import FeatureImage from '../post-components/FeatureImage.js';
+import PostExcerpt from '../post-components/PostExcerpt.js';
 
 import { TweenMax, Back } from 'gsap';
 
@@ -52,6 +53,7 @@ export default class PostGridType extends Component {
 				</div>
 				<div className = "cherry-post__content">
 					<PostTitle id = { postData.id } title = { postData.title.rendered } link = { postData.link } />
+					<PostExcerpt id = { postData.id } excerpt = { postData.excerpt } />
 					<div className = "cherry-post__meta-info">
 						<span className = "post-meta-item post-meta-item--author">
 							<a href = { postData.author_data.author_link }>{ postData.author_data.display_name }</a>

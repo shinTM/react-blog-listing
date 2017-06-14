@@ -6,14 +6,6 @@ export default function pageReducer( state = initialState, action ) {
 			return action.page;
 			break;
 
-		case 'INCREMENT_PAGE':
-			return state + action.amount;
-			break;
-
-		case 'DECREMENT_PAGE':
-			return state - action.amount;
-			break;
-
 		default:
 			return state;
 	}

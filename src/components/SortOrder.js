@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import MdExpandMore from 'react-icons/md/expand-more';
+import MdExpandLess from 'react-icons/md/expand-less';
 import { connect } from 'react-redux';
 
 import WpData from '../data/WpData';
 
-import FontAwesome from 'react-fontawesome';
-
 import {
+	loaderVisibleAction,
 	updatePostListAction
 } from '../actions';
 
@@ -15,12 +16,26 @@ class SortOrder extends Component{
 	}
 
 	onSortClick = ( event ) => {
-
-		this.props.onUpdatePostList( WpData.allPosts.reverse() );
-
 		this.setState( {
 			isDesc: ! this.state.isDesc
 		} );
+
+		this.props.onLoaderVisibleUpdate( true );
+
+		WpData.queryParams.order = this.state.isDesc ? 'asc' : 'desc';
+
+		WpData.getPosts().then(
+			response => {
+				let postsData = JSON.parse( response.data );
+
+				this.props.onLoaderVisibleUpdate( false );
+				this.props.onUpdatePostList( postsData );
+			},
+			error => {
+				alert( `Rejected: ${error}` );
+			}
+		);
+
 	}
 
 	render() {
@@ -33,7 +48,7 @@ class SortOrder extends Component{
 		return(
 			<div className = "cherry-post-filters__sort-order" onClick = { this.onSortClick }>
 				<span>Order</span>
-				<FontAwesome tag = 'i' name = { this.state.isDesc ? 'chevron-down' : 'chevron-up' } />
+				{ this.state.isDesc ? <MdExpandMore size = { 22 } /> : <MdExpandLess size = { 22 } /> }
 			</div>
 		);
 	}
@@ -41,10 +56,18 @@ class SortOrder extends Component{
 }
 
 export default connect(
-	null,
+	state    => ( {
+		postList: state.postList
+	} ),
+
 	dispatch => ( {
 		onUpdatePostList: ( postList ) => {
 			dispatch( updatePostListAction( postList ) );
+		},
+
+		onLoaderVisibleUpdate: ( visible ) => {
+			dispatch( loaderVisibleAction( visible ) );
 		}
+
 	} )
 )( SortOrder );

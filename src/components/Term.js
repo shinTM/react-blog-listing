@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import FontAwesome from 'react-fontawesome';
+import MdCheck from 'react-icons/md/check';
+import MdPanoramaFishEye from 'react-icons/md/panorama-fish-eye';
 
 export default class Term extends Component{
 	state = {
@@ -17,7 +18,7 @@ export default class Term extends Component{
 	render() {
 		return(
 			<span className = { this.state.isActive ? 'active' : null } onClick = { this.onTermClick }>
-				<FontAwesome tag = 'i' name = { this.state.isActive ? 'check-circle-o' : 'circle-o' } />
+				{ this.state.isActive ? <MdCheck size = { 20 } /> : null }
 				{ this.props.termName }
 			</span>
 		);

@@ -6,7 +6,7 @@ import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 export default class PostList extends Component {
 	render() {
-		let { isLoaded, postList, page, postPerPage, layout, column } = this.props;
+		let { isLoaded, postList, layout } = this.props;
 
 		if ( ! isLoaded ) {
 			return false;
@@ -19,15 +19,7 @@ export default class PostList extends Component {
 		}
 
 		for ( let key in postList ) {
-			let leftBound = page * postPerPage - postPerPage,
-				rightBound = page * postPerPage;
-
-			if ( key >= leftBound && key < rightBound ) {
-				postList[key].is_visible = true;
-			} else {
-				postList[key].is_visible = false;
-			}
-
+			postList[key].is_visible = true;
 		}
 
 		const posts = postList.map( ( post, index ) => (

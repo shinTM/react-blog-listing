@@ -34,24 +34,23 @@ export default class PostExcerpt extends Component {
 		let excerptContent = '';
 
 		if ( ! Settings.defaultSettings.customizerMode ) {
-			excerptContent = <span className = "trimed-excerpt" dangerouslySetInnerHTML = {{ __html: postData.trimed_content }}></span>
+			excerptContent = <span className = "trimed-excerpt" dangerouslySetInnerHTML = {{ __html: postData.trimed_content }}></span>;
 		} else {
-			titleContent = <div>
+			excerptContent = <span>
 				{ this.state.customizerMode ?
-					<span className = "trimed-excerpt" tabIndex = "0" contentEditable dangerouslySetInnerHTML = {{ __html: postData.trimed_content }}></span>
+					<span className = "trimed-excerpt" tabIndex = "0" contentEditable dangerouslySetInnerHTML = {{ __html: excerpt }}></span>
 					:
-					<span className = "trimed-excerpt" tabIndex = "0" dangerouslySetInnerHTML = {{ __html: postData.trimed_content }}></span>
+					<span className = "trimed-excerpt" tabIndex = "0" dangerouslySetInnerHTML = {{ __html: excerpt }}></span>
 				}
 				<span className = "edit-button" onClick = { ( event ) => this.onEditClick( id, event ) } >
 					{ ! this.state.customizerMode ? <MdEdit size = { 18 }/> : <MdSave size = { 18 }/> }
 				</span>
-			</div>
+			</span>;
 		}
 
 		let classes = [ 'cherry-post__trimed-excerpt' ];
-
 		return(
-			<p className = { classes.join( ' ' ) }>{ titleContent }</p>
+			<p className = { classes.join( ' ' ) }>{ excerptContent }</p>
 		);
 	}
 }

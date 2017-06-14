@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
-import $ from 'jquery';
 
 import WpData from '../data/WpData';
 import Settings from '../data/Settings';
@@ -17,37 +16,28 @@ import SortOrder from './SortOrder.js';
 import {
 	updatePostListAction,
 	updateTermListAction,
-	changePageAction,
-	incrementPageAction,
-	decrementPageAction,
 	changeLayoutAction,
-	changePostPerPageAction,
-	changeFeatureImageAction
+	changeFeatureImageAction,
+	loaderVisibleAction,
+	updatePageNumberAction
 } from '../actions';
 
 class ViewPort extends Component{
 
 	state = {
 		isLoaded: false,
-		loaderVisible: true,
-		loaderMessage: 'Loading...'
 	};
 
 	componentDidMount() {
 
-		let getAllPostPromise = WpData.getAllPosts().then(
+		let getAllPostPromise = WpData.getPosts().then(
 			response => {
-				let responseData = JSON.parse( response );
+				let postsData = JSON.parse( response.data );
 
-				this.setState( {
-					loaderMessage: 'Loading... Post data loaded'
-				});
+				WpData.allPosts = postsData;
 
-				WpData.allPosts = responseData;
-
-				console.log(WpData.allPosts);
-
-				this.props.onUpdatePostList( responseData );
+				this.props.onPageNumberUpdate( response.totalPagesAmount );
+				this.props.onUpdatePostList( postsData );
 			},
 			error => {
 				alert( `Rejected: ${error}` );
@@ -56,41 +46,29 @@ class ViewPort extends Component{
 
 		let getAllCategoryPromise = WpData.getAllCategory().then(
 			response => {
-				let responseData = JSON.parse( response );
+				let categoriesData = JSON.parse( response.data );
 
-				this.setState( {
-					loaderMessage: 'Loading... Category data loaded'
-				});
-
-				this.allCategories = responseData;
-				this.props.onUpdateTermList( responseData );
+				this.allCategories = categoriesData;
+				this.props.onUpdateTermList( categoriesData );
 			},
 			error => {
 				alert(`Rejected: ${error}`);
 			}
 		);
 
-
 		Promise.all( [ getAllPostPromise, getAllCategoryPromise ] ).then( () => {
+			this.props.onLoaderVisibleUpdate( false );
 			this.setState( {
-				loaderMessage: 'Loaded'
+				isLoaded: true,
 			});
-
-			setTimeout( () => {
-				this.setState( {
-					isLoaded: true,
-					loaderVisible: false,
-				});
-			}, 1000 );
 		} );
-
 	}
 
 	render() {
 		return(
 			<div>
-				<TransitionGroup>
-					{ this.state.loaderVisible && <Loader message = { this.state.loaderMessage }/> }
+				<TransitionGroup component = 'div' className = 'cherry-post-loader-container'>
+					{ this.props.loaderVisible && <Loader message = { this.props.loaderMessage }/> }
 				</TransitionGroup>
 				<div className = "cherry-post-filters">
 					<TermFilterList
@@ -109,10 +87,7 @@ class ViewPort extends Component{
 				<PostList
 					isLoaded = { this.state.isLoaded }
 					postList = { this.props.postList }
-					page = { this.props.page }
-					postPerPage = { this.props.postPerPage }
 					layout = { this.props.layout }
-					column = { this.props.postListColumn }
 				/>
 				<div className = "cherry-post-controls">
 					{ this.getViewMoreControl() }
@@ -124,20 +99,10 @@ class ViewPort extends Component{
 	getViewMoreControl() {
 		let viewMoreControl = <Pagination
 			isLoaded = { this.state.isLoaded }
-			postList = { this.props.postList }
-			page = { this.props.page }
-			postPerPage = { this.props.postPerPage }
-			onPageUpdate = { this.props.onPageUpdate }
-			onPageIncrease = { this.props.onPageIncrease }
-			onPageDecrease = { this.props.onPageDecrease }
 		/>;
 
 		if ( 'more-button' === Settings.defaultSettings.viewNextType ) {
-			return <MoreButton
-					isLoaded = { this.state.isLoaded }
-					postPerPage = { this.props.postPerPage }
-					onLoadMore = { this.props.onPostPerPageUpdate }
-				/>
+			return <MoreButton isLoaded = { this.state.isLoaded } />
 		}
 
 		return viewMoreControl;
@@ -150,29 +115,21 @@ export default connect(
 		postList: state.postList,
 		termList: state.termList,
 		page: state.page,
+		numberOfPage: state.numberOfPage,
 		postPerPage: state.postPerPage,
 		layout: state.layout,
-		postListColumn: state.postListColumn
+		loaderVisible: state.loader.loaderVisible,
+		loaderMessage: state.loader.loaderMessage
 	} ),
 	dispatch => ( {
 		onUpdatePostList: ( postList ) => {
 			dispatch( updatePostListAction( postList ) );
 		},
+
 		onUpdateTermList: ( termList ) => {
 			dispatch( updateTermListAction( termList ) );
 		},
-		onPageUpdate: ( page ) => {
-			WpData.tempDelay = 0;
-			dispatch( changePageAction( page + 1 ) );
-		},
-		onPageIncrease: ( page ) => {
-			WpData.tempDelay = 0;
-			dispatch( incrementPageAction( 1 ) );
-		},
-		onPageDecrease: ( page ) => {
-			WpData.tempDelay = 0;
-			dispatch( decrementPageAction( 1 ) );
-		},
+
 		onLayoutUpdate: ( layout ) => {
 			let imageType = 'tag';
 
@@ -190,11 +147,13 @@ export default connect(
 			dispatch( changeFeatureImageAction( imageType ) );
 			dispatch( changeLayoutAction( layout ) );
 		},
-		onPostPerPageUpdate: () => {
-			let value = Settings.defaultSettings.viewMoreAmount;
-			WpData.tempDelay = 0;
 
-			dispatch( changePostPerPageAction( value ) );
+		onPageNumberUpdate: ( number ) => {
+			dispatch( updatePageNumberAction( number ) );
+		},
+
+		onLoaderVisibleUpdate: ( visible ) => {
+			dispatch( loaderVisibleAction( visible ) );
 		}
 	} )
 )( ViewPort );

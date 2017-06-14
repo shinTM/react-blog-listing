@@ -53,7 +53,6 @@ class Post extends Component {
 export default connect(
 	state => ( {
 		termList: state.termList,
-		postListColumn: state.postListColumn,
 		layout: state.layout,
 		imageType: state.imageType
 	} )

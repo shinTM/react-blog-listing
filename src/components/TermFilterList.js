@@ -3,15 +3,22 @@ import Term from './Term.js';
 import { connect } from 'react-redux';
 
 import WpData from '../data/WpData';
+import Settings from '../data/Settings';
 
-import { changePageAction, updatePostListAction } from '../actions';
+import {
+	changePageAction,
+	updatePostListAction,
+	loaderVisibleAction,
+	updatePageNumberAction,
+	setPostPerPageAction
+} from '../actions';
 
 class TermFilterList extends Component {
 
 	activeTermsList = [];
 
 	renderTermList() {
-		const { isLoaded, termList, onClick } = this.props;
+		const { isLoaded, termList } = this.props;
 
 		if ( ! isLoaded ) {
 			return false;
@@ -37,26 +44,31 @@ class TermFilterList extends Component {
 	}
 
 	onTermClick = ( termId ) => ( event ) => {
-		let postList = WpData.allPosts;
-
 		if ( ! this.activeTermsList.includes( termId ) ) {
 			this.activeTermsList.push( termId );
 		} else {
 			this.activeTermsList = this.activeTermsList.filter( value => value !== termId );
 		}
 
-		if ( this.activeTermsList.length ) {
-			postList = postList.filter( ( post ) => {
+		this.props.onLoaderVisibleUpdate( true );
+		this.props.onPostPerPageUpdate( Settings.defaultSettings.postPerPage );
 
-			for ( let category of post.categories ) {
-				if ( this.activeTermsList.includes( category ) ) {
-					return true;
-				}
+		WpData.queryParams.page = 1;
+		WpData.queryParams.postPerPage = Settings.defaultSettings.postPerPage;
+		WpData.queryParams.categories = this.activeTermsList;
+
+		WpData.getPosts().then(
+			response => {
+				let postsData = JSON.parse( response.data );
+
+				this.props.onLoaderVisibleUpdate( false );
+				this.props.onPageNumberUpdate( response.totalPagesAmount );
+				this.props.onUpdatePostList( postsData );
+			},
+			error => {
+				alert( `Rejected: ${error}` );
 			}
-			} );
-		}
-
-		this.props.onUpdatePostList( postList );
+		);
 	};
 
 	render() {
@@ -77,6 +89,22 @@ export default connect(
 		onUpdatePostList: ( postList ) => {
 			dispatch( updatePostListAction( postList ) );
 			dispatch( changePageAction( 1 ) );
+		},
+
+		onPageUpdate: ( page ) => {
+			dispatch( changePageAction( page ) );
+		},
+
+		onPageNumberUpdate: ( number ) => {
+			dispatch( updatePageNumberAction( number ) );
+		},
+
+		onPostPerPageUpdate: ( number ) => {
+			dispatch( setPostPerPageAction( number ) );
+		},
+
+		onLoaderVisibleUpdate: ( visible ) => {
+			dispatch( loaderVisibleAction( visible ) );
 		}
 	} )
 )( TermFilterList );

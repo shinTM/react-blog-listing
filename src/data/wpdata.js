@@ -10,11 +10,16 @@ export default class WpData {
 
 	static tempDelay = 0;
 
-	static defaultsQueryParams = {
+	static totalPagesAmount = 0;
+
+	static totalPostsAmount = 0;
+
+	static queryParams = {
 		page: 1,
 		postPerPage: Settings.defaultSettings.postPerPage,
 		categories: [],
 		tags: [],
+		order: 'desc',
 	};
 
 	static getAllPosts() {
@@ -30,11 +35,14 @@ export default class WpData {
 	}
 
 	static getPosts( queryParams = {} ) {
-		this.getXHR.abort();
 
-		let mergedQueryParams = Object.assign( WpData.defaultsQueryParams, queryParams );
+		if ( WpData.getXHR ) {
+			WpData.getXHR.abort();
+		}
 
-		let url = `${ Settings.siteUrl }/wp-json/wp/v2/posts?per_page=${ mergedQueryParams.postPerPage }&page=${ mergedQueryParams.page }${ WpData.generateCategorySubUrl( mergedQueryParams.categories ) }`;
+		let mergedQueryParams = Object.assign( {}, WpData.queryParams, queryParams );
+
+		let url = `${ Settings.siteUrl }/wp-json/wp/v2/posts?per_page=${ mergedQueryParams.postPerPage }&page=${ mergedQueryParams.page }&order=${ mergedQueryParams.order }${ WpData.generateCategorySubUrl( mergedQueryParams.categories ) }`;
 
 		return this.httpGetRequest( url );
 	}
@@ -95,9 +103,14 @@ export default class WpData {
 
 			WpData.getXHR.onload = function() {
 				if (this.status == 200) {
-					resolve(this.response);
+					WpData.totalPagesAmount = this.getResponseHeader( 'X-WP-TotalPages' );
+					WpData.totalPostsAmount = this.getResponseHeader( 'X-WP-Total' );
 
-
+					resolve( {
+						data: this.response,
+						totalPagesAmount: WpData.totalPagesAmount,
+						totalPostsAmount: WpData.totalPostsAmount
+					} );
 				} else {
 					var error = new Error(this.statusText);
 
@@ -105,6 +118,15 @@ export default class WpData {
 					reject(error);
 				}
 			};
+
+			/*WpData.getXHR.addEventListener( 'progress', function ( event ) {
+				console.log(event.lengthComputable);
+				if ( event.lengthComputable ) {
+					console.log(event.loaded);
+				console.log(event.total);
+				console.log('--------------');
+				}
+			});*/
 
 			WpData.getXHR.onerror = function() {
 				reject( new Error( 'Network Error' ) );

@@ -5,6 +5,8 @@ import page from './pageReducer';
 import postPerPage from './postPerPageReducer';
 import layout from './layoutListingReducer';
 import imageType from './featureImageTypeReducer';
+import loader from './loaderReducer';
+import numberOfPage from './numberOfPageReducer';
 
 export default combineReducers({
 	postList,
@@ -12,5 +14,7 @@ export default combineReducers({
 	page,
 	postPerPage,
 	layout,
-	imageType
+	imageType,
+	loader,
+	numberOfPage
 });

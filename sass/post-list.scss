@@ -1,15 +1,38 @@
-#cherry-post-listing{;
+#cherry-post-listing {
 	position: relative;
 }
 
-.cherry-post-loader {
-	display: flex;
-	justify-content: center;
-	position: absolute;
+.cherry-post-loader-container {
 	width: 100%;
-	height: 30px;
+	height: 5px;
 	top: 0;
 	left: 0;
+	display: block;
+	position: fixed;
+	z-index: 100;
+}
+
+.cherry-post-loader {
+	width: 100%;
+	height: 4px;
+
+	.loading-bar {
+		position: relative;
+		width: 100%;
+		height: 4px;
+		background-color: #0d0d0d;
+
+		&:before{
+			display: block;
+			position: absolute;
+			content: "";
+			left: -200px;
+			width: 200px;
+			height: 4px;
+			background-color: #ff4f1e;
+			animation: loading 2s linear infinite;
+		}
+	}
 
 	i {
 		color: $accent_1;
@@ -18,7 +41,6 @@
 	&__inner {
 		display: flex;
 		align-items: center;
-		margin-bottom: 20px;
 	}
 
 	&__message {
@@ -27,14 +49,15 @@
 }
 
 .cherry-post-filters {
-	margin-bottom: 40px;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	background-color: white;
+	margin-bottom: 40px;
 	box-shadow: 7px 7px 10px 0px rgba( 21, 21, 30, 0.19 );
-	padding: 20px;
 
 	&__term-list {
+		padding: 20px;
 		ul {
 			display: flex;
 			@include reset-list;
@@ -53,8 +76,14 @@
 						text-align: center;
 						@include transition( all .3s ease );
 
-						i {
-							margin-right: 5px;
+						&:before {
+							display: inline-block;
+							width: 22px;
+							height: 22px;
+							border-radius: 50%;
+							background-color: #f7f7f7;
+							box-shadow: inset 0 0 0 1px #e6e4e4;
+							content:'';
 						}
 
 						&:not( .active ):hover {
@@ -72,6 +101,7 @@
 	}
 
 	&__layout-type {
+		padding: 20px;
 
 		.inner {
 			display: flex;
@@ -95,17 +125,15 @@
 	}
 
 	&__sort-order {
-		padding: 5px 7px;
 		cursor: pointer;
-		margin-left: 2px;
 		@include transition( all .3s ease );
 
-		i {
-			color: $accent_1;
+		svg {
+			fill: $accent_1;
 		}
 
 		span {
-			margin-right: 5px;
+			margin: 0;
 		}
 	}
 }
@@ -348,6 +376,7 @@
 
 	&__title {
 		text-align: center;
+		word-break: break-word;
 		margin-bottom: 1em;
 	}
 
@@ -445,5 +474,24 @@
 		.title {
 
 		}
+	}
+}
+
+@keyframes loading {
+	from { left: -200px; width: 30%; }
+	50% { width: 30%; }
+	70% { width: 70%; }
+	80% { left: 50%; }
+	95% { left: 120%; }
+	to { left: 100%; }
+}
+
+@keyframes spinner {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
 	}
 }
