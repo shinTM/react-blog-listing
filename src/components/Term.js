@@ -16,11 +16,19 @@ export default class Term extends Component{
 	}
 
 	render() {
+		let classes = [ 'inner' ];
+
+		if ( this.state.isActive ) {
+			classes.push( 'active' );
+		}
+
 		return(
-			<span className = { this.state.isActive ? 'active' : null } onClick = { this.onTermClick }>
+			<div className = { classes.join( ' ' ) } onClick = { this.onTermClick }>
 				{ this.state.isActive ? <MdCheck size = { 20 } /> : null }
-				{ this.props.termName }
-			</span>
+				<span>
+					{ this.props.termName }
+				</span>
+			</div>
 		);
 	}
 }

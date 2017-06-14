@@ -17,7 +17,6 @@ export default class LayoutTypeFilter extends Component {
 				{
 					Settings.listingLayoutsSettings.map( ( layoutItem, index ) => {
 						let itemClasses = `layout-type-item layout-type-item--${ layoutItem.name } ${ layout == layoutItem.name ? ' active' : '' }`;
-
 						return (
 							<span key = { index } className = { itemClasses } onClick = { ( event ) => onLayoutUpdate( layoutItem.name ) } >
 								<FontAwesome tag = 'i' name = { layoutItem.icon } />

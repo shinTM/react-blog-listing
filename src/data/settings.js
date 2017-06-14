@@ -6,7 +6,7 @@ export default class Settings {
 		postAmount:    100,
 		listingLayout: 'grid',
 		postPerPage:   6,
-		columns: 3,
+		columns:       3,
 		responsiveColumns: {
 			'col-xl': 3,
 			'col-lg': 3,
@@ -14,9 +14,9 @@ export default class Settings {
 			'col-sm': 2,
 			'col-xs': 1
 		},
-		viewNextType: 'pagination', //pagination, more-button
+		viewNextType:   'pagination', //pagination, more-button
 		viewMoreNumber: 3,
-		imageType: 'cover', //tag, cover
+		imageType:      'cover', //tag, cover
 		customizerMode: true,
 		authorizationData: {
 			login: 'admin',
