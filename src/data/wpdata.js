@@ -22,12 +22,6 @@ export default class WpData {
 		order: 'desc',
 	};
 
-	static getAllPosts() {
-		let url = `${ Settings.siteUrl }/wp-json/wp/v2/posts?per_page=${ Settings.defaultSettings.postAmount }`;
-
-		return this.httpGetRequest( url );
-	}
-
 	static getAllCategory() {
 		let url = `${ Settings.siteUrl }/wp-json/wp/v2/categories`;
 
@@ -60,38 +54,46 @@ export default class WpData {
 	static setTitleData( id, title ) {
 		let url = `${ Settings.siteUrl }/wp-json/wp/v2/posts/${ id }?title=${ title }`;
 
-		this.httpPostRequest( url );
+		return this.httpPostRequest( url );
 	}
 
 	static setPostExceptData( id, excerpt ) {
 		let url = `${ Settings.siteUrl }/wp-json/wp/v2/posts/${ id }?excerpt=${ excerpt }`;
 
-		this.httpPostRequest( url );
+		return this.httpPostRequest( url );
 	}
 
 	static httpPostRequest( url ) {
-		WpData.postXHR = new XMLHttpRequest();
-		WpData.postXHR.open( 'POST', url, true );
+		return new Promise( function( resolve, reject ) {
+			WpData.postXHR = new XMLHttpRequest();
+			WpData.postXHR.open( 'POST', url, true );
 
-		let authorizationData = this.base64_encode( `${ Settings.defaultSettings.authorizationData.login }:${ Settings.defaultSettings.authorizationData.pass }` );
+			let authorizationData = WpData.base64_encode( `${ Settings.defaultSettings.authorizationData.login }:${ Settings.defaultSettings.authorizationData.pass }` );
 
-		WpData.postXHR.setRequestHeader( 'Authorization', 'Basic ' + authorizationData );
-
-		WpData.postXHR.onload = function() {
-			if (this.status == 200) {
-				console.log('updated');
+			if ( window.wpApiSettings ) {
+				WpData.postXHR.setRequestHeader( 'X-WP-Nonce', wpApiSettings.nonce  );
 			} else {
-				var error = new Error(this.statusText);
-
-				error.code = this.status;
+				WpData.postXHR.setRequestHeader( 'Authorization', 'Basic ' + authorizationData );
 			}
-		};
 
-		WpData.postXHR.onerror = function() {
-			new Error( 'Network Error' )
-		};
+			WpData.postXHR.onload = function() {
+				if (this.status == 200) {
+					resolve( 'updated' );
+				} else {
+					var error = new Error(this.statusText);
 
-		WpData.postXHR.send();
+					error.code = this.status;
+				}
+			};
+
+			WpData.postXHR.onerror = function() {
+				new Error( 'Network Error' );
+				error.code = this.status;
+				reject(error);
+			};
+
+			WpData.postXHR.send();
+		} );
 	}
 
 	static httpGetRequest( url ) {
@@ -119,22 +121,12 @@ export default class WpData {
 				}
 			};
 
-			/*WpData.getXHR.addEventListener( 'progress', function ( event ) {
-				console.log(event.lengthComputable);
-				if ( event.lengthComputable ) {
-					console.log(event.loaded);
-				console.log(event.total);
-				console.log('--------------');
-				}
-			});*/
-
 			WpData.getXHR.onerror = function() {
 				reject( new Error( 'Network Error' ) );
 			};
 
 			WpData.getXHR.send();
 		} );
-
 	}
 
 	static base64_encode( data ) {

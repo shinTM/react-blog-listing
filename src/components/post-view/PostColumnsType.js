@@ -11,7 +11,6 @@ export default class PostColumnsType extends Component {
 
 		return(
 			<div className="inner-wrapper" ref = { ( container ) => this.container = container }>
-				{/*<h3 className = "cherry-post__title" onBlur = { ( event ) => saveTitleHandler( postData.id, event ) }>{ postData.title.rendered }</h3>*/}
 				<div className = "cherry-post__media">
 					<FeatureImage
 						type = { imageType }

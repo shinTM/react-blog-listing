@@ -3,21 +3,19 @@ export default class Settings {
 	//static siteUrl = 'http://localhost:8888/cherry5-dev/';
 
 	static defaultSettings = {
-		postAmount:    100,
-		listingLayout: 'grid',
-		postPerPage:   6,
-		columns:       3,
-		responsiveColumns: {
+		listingLayout: Settings.getOption( 'listingLayout', 'grid' ),
+		postPerPage:   Settings.getOption( 'postPerPage', 6 ),
+		responsiveColumns: Settings.getOption( 'responsiveColumns', {
 			'col-xl': 3,
 			'col-lg': 3,
 			'col-md': 3,
 			'col-sm': 2,
 			'col-xs': 1
-		},
-		viewNextType:   'pagination', //pagination, more-button
-		viewMoreNumber: 3,
+		} ),
+		viewNextType:   Settings.getOption( 'viewNextType', 'more-button' ), //pagination, more-button
+		viewMoreNumber: Settings.getOption( 'viewMoreNumber', 3 ),
 		imageType:      'cover', //tag, cover
-		customizerMode: true,
+		customizerMode: Settings.getOption( 'customizerMode', true ),
 		authorizationData: {
 			login: 'admin',
 			pass: '1'
@@ -42,4 +40,15 @@ export default class Settings {
 			'icon': 'calendar-o'
 		}
 	]
+
+	static getOption( optionName = '', defaultValue = false ) {
+
+		if ( window && window.cherryReactBlog ) {
+
+			return window.cherryReactBlog.optionName || defaultValue;
+		}
+
+		return defaultValue;
+	}
+
 }

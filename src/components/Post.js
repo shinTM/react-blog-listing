@@ -7,7 +7,6 @@ import PostColumnsType from './post-view/PostColumnsType.js';
 import PostTimelineType from './post-view/PostTimelineType.js';
 import PostListType from './post-view/PostListType.js';
 
-import Settings from '../data/Settings';
 import Tools from '../tools/Tools';
 
 class Post extends Component {

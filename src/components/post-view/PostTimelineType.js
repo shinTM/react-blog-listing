@@ -5,7 +5,7 @@ import PostTermList from '../post-components/PostTermList.js';
 import FeatureImage from '../post-components/FeatureImage.js';
 import PostExcerpt from '../post-components/PostExcerpt.js';
 
-import { TweenMax, Back } from 'gsap';
+import { TweenMax } from 'gsap';
 
 import WpData from '../../data/WpData';
 

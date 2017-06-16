@@ -10,6 +10,10 @@
 	display: block;
 	position: fixed;
 	z-index: 100;
+
+	.admin-bar & {
+		top: 32px;
+	}
 }
 
 .cherry-post-loader {
@@ -50,21 +54,23 @@
 
 .cherry-post-filters {
 	display: flex;
+	flex-flow: row wrap;
 	justify-content: space-between;
 	align-items: center;
+	padding: 20px;
 	background-color: white;
 	margin-bottom: 40px;
 	box-shadow: 7px 7px 10px 0px rgba( 21, 21, 30, 0.19 );
 
 	&__term-list {
-		padding: 20px;
-
 		ul {
 			display: flex;
+			flex-flow: row wrap;
+			align-items: center;
 			@include reset-list;
 
 			li {
-				margin-right: 20px;
+				margin: 5px 20px 5px 0;
 				cursor: pointer;
 
 				.inner {
@@ -74,8 +80,8 @@
 
 					&:before {
 						display: inline-block;
-						width: 22px;
-						height: 22px;
+						min-width: 22px;
+						min-height: 22px;
 						margin-right: 5px;
 						top: 0;
 						left: 0;
@@ -94,6 +100,7 @@
 					}
 
 					span {
+						white-space: nowrap;
 						@include transition( all .3s ease );
 					}
 
@@ -118,7 +125,6 @@
 	}
 
 	&__layout-type {
-		padding: 20px;
 
 		.inner {
 			display: flex;
@@ -492,6 +498,10 @@
 
 		}
 	}
+}
+
+.spinner {
+	animation: spinner 1s linear infinite;
 }
 
 @keyframes loading {

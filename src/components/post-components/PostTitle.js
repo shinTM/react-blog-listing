@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import MdEdit from 'react-icons/md/edit';
 import MdSave from 'react-icons/md/save';
+import MdAutorenew from 'react-icons/md/autorenew';
 import $ from 'jquery';
 
 import WpData from '../../data/WpData';
@@ -9,7 +10,7 @@ import Settings from '../../data/Settings';
 export default class PostTitle extends Component {
 
 	state = {
-		customizerMode: false
+		customizerMode: 'edit'
 	};
 
 	onEditClick( id, event ) {
@@ -18,28 +19,61 @@ export default class PostTitle extends Component {
 			titleContent = $title.html();
 
 		this.setState({
-			customizerMode: ! this.state.customizerMode
+			customizerMode: 'edit' == this.state.customizerMode ? 'save' : 'edit'
 		});
 
-		if ( ! this.state.customizerMode ) {
+		if ( 'edit' == this.state.customizerMode ) {
 			$title.focus();
 		} else {
 			$title.blur();
-			WpData.setTitleData( id, titleContent );
+			this.setState({
+				customizerMode: 'loading'
+			});
+			WpData.setTitleData( id, titleContent ).then(
+				response => {
+					this.setState({
+						customizerMode: 'edit'
+					});
+				}
+			);
 		}
 	}
 
 	render() {
 		let { id, title, link } = this.props;
 		let titleContent = '';
+		let icon = '';
+		let content = '';
+
+		switch( this.state.customizerMode ) {
+			case 'edit':
+				icon = <MdEdit size = { 18 }/>
+				break;
+			case 'save':
+				icon =  <MdSave size = { 18 } />
+				break;
+			case 'loading':
+				icon =  <MdAutorenew className = "spinner" size = { 18 } />
+				break;
+		}
+
+		switch( this.state.customizerMode ) {
+			case 'edit':
+			case 'loading':
+				content = <span className = "title" tabIndex = "0">{ title }</span>;
+				break;
+			case 'save':
+				content = <span className = "title" tabIndex = "0" contentEditable>{ title }</span>;
+				break;
+		}
 
 		if ( ! Settings.defaultSettings.customizerMode ) {
 			titleContent = <a href = { link }>{ title }</a>
 		} else {
 			titleContent = <div>
-				{ this.state.customizerMode ? <span className = "title" tabIndex = "0" contentEditable>{ title }</span> : <span className = "title" tabIndex = "0">{ title }</span> }
+				{ content }
 				<span className = "edit-button" onClick = { ( event ) => this.onEditClick( id, event ) } >
-					{ ! this.state.customizerMode ? <MdEdit size = { 18 }/> : <MdSave size = { 18 }/> }
+					{ icon }
 				</span>
 			</div>
 		}

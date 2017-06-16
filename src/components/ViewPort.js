@@ -68,7 +68,7 @@ class ViewPort extends Component{
 		return(
 			<div>
 				<TransitionGroup component = 'div' className = 'cherry-post-loader-container'>
-					{ this.props.loaderVisible && <Loader message = { this.props.loaderMessage }/> }
+					{ this.props.loaderVisible && <Loader /> }
 				</TransitionGroup>
 				<div className = "cherry-post-filters">
 					<TermFilterList
@@ -97,9 +97,7 @@ class ViewPort extends Component{
 	}
 
 	getViewMoreControl() {
-		let viewMoreControl = <Pagination
-			isLoaded = { this.state.isLoaded }
-		/>;
+		let viewMoreControl = <Pagination isLoaded = { this.state.isLoaded } />;
 
 		if ( 'more-button' === Settings.defaultSettings.viewNextType ) {
 			return <MoreButton isLoaded = { this.state.isLoaded } />
@@ -111,15 +109,10 @@ class ViewPort extends Component{
 
 export default connect(
 	state    => ( {
-		tempState: state,
 		postList: state.postList,
 		termList: state.termList,
-		page: state.page,
-		numberOfPage: state.numberOfPage,
-		postPerPage: state.postPerPage,
 		layout: state.layout,
-		loaderVisible: state.loader.loaderVisible,
-		loaderMessage: state.loader.loaderMessage
+		loaderVisible: state.loader.loaderVisible
 	} ),
 	dispatch => ( {
 		onUpdatePostList: ( postList ) => {

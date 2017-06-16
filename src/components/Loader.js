@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { TweenMax, Power2 } from 'gsap';
+import { TweenMax } from 'gsap';
 
 export default class Loader extends Component{
 
@@ -22,13 +22,11 @@ export default class Loader extends Component{
 	}
 
 	render() {
-		const { message } = this.props;
 
 		return(
 			<div className = "cherry-post-loader" ref = { ( container ) => this.container = container }>
 				<div className = "cherry-post-loader__inner">
 					<div className = "loading-bar"></div>
-					{/*<span className = "cherry-post-loader__message">{ message }</span>*/}
 				</div>
 			</div>
 		);
