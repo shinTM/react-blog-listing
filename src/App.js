@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import ViewPort from './components/ViewPort.js';
+import Settings from './data/Settings';
 
 import reducers from './reducers';
 

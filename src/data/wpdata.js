@@ -70,8 +70,8 @@ export default class WpData {
 
 			let authorizationData = WpData.base64_encode( `${ Settings.defaultSettings.authorizationData.login }:${ Settings.defaultSettings.authorizationData.pass }` );
 
-			if ( window.wpApiSettings ) {
-				WpData.postXHR.setRequestHeader( 'X-WP-Nonce', wpApiSettings.nonce  );
+			if ( window.cherryReactBlog ) {
+				WpData.postXHR.setRequestHeader( 'X-WP-Nonce', window.cherryReactBlog.nonce );
 			} else {
 				WpData.postXHR.setRequestHeader( 'Authorization', 'Basic ' + authorizationData );
 			}

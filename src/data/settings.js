@@ -45,8 +45,7 @@ export default class Settings {
 	static getOption( optionName = '', defaultValue = false ) {
 
 		if ( window && window.cherryReactBlog ) {
-
-			return window.cherryReactBlog.optionName || defaultValue;
+			return window.cherryReactBlog[optionName] || defaultValue;
 		}
 
 		return defaultValue;
