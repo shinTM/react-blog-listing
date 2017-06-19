@@ -68,7 +68,7 @@ class ViewPort extends Component{
 		return(
 			<div>
 				<TransitionGroup component = 'div' className = 'cherry-post-loader-container'>
-					{ this.props.loaderVisible && <Loader /> }
+					{ this.props.loaderVisible && < Loader/> }
 				</TransitionGroup>
 				<div className = "cherry-post-filters">
 					<TermFilterList
